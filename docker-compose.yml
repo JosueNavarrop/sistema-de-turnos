@@ -1,0 +1,41 @@
+# TurnoFácil · Levantar todo:  docker compose up -d --build
+# Abrir:  http://localhost:8000   (API y documentación Swagger en http://localhost:8000/docs)
+
+services:
+  db:
+    image: mysql:8.4
+    restart: unless-stopped
+    environment:
+      MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD:-turnofacil-root}
+      MYSQL_DATABASE: turnofacil
+      MYSQL_USER: turnofacil
+      MYSQL_PASSWORD: ${MYSQL_PASSWORD:-turnofacil}
+      TZ: ${TZ:-America/Santo_Domingo}
+    volumes:
+      - datos-mysql:/var/lib/mysql
+      - ./database/schema.sql:/docker-entrypoint-initdb.d/01-schema.sql:ro
+    ports:
+      - "3307:3306"   # acceso opcional desde el equipo (MySQL Workbench, DBeaver)
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost", "-uroot", "-p$$MYSQL_ROOT_PASSWORD", "--silent"]
+      interval: 5s
+      timeout: 3s
+      retries: 30
+      start_period: 20s
+
+  app:
+    build: .
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: mysql+pymysql://turnofacil:${MYSQL_PASSWORD:-turnofacil}@db:3306/turnofacil?charset=utf8mb4
+      JWT_SECRET: ${JWT_SECRET:-turnofacil-clave-de-desarrollo-cambiar-en-produccion}
+      MINUTOS_POR_PERSONA: ${MINUTOS_POR_PERSONA:-3}
+      TZ: ${TZ:-America/Santo_Domingo}
+    ports:
+      - "${PUERTO:-8000}:8000"
+
+volumes:
+  datos-mysql:

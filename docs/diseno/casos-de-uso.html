@@ -1,0 +1,335 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TurnoFácil · Casos de uso</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#1E5EFF; --primary-dark:#0B2A6F; --accent:#14B8A6;
+  --bg:#F5F7FB; --surface:#FFFFFF; --text:#1F2937; --muted:#6B7280; --border:#E5E7EB;
+  --tint:#1E5EFF14; --shadow:0 2px 8px rgba(0,0,0,.08);
+  --code-bg:#0B2A6F; --code-text:#E0E7FF;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1424; --surface:#161E33; --text:#E5E7EB; --muted:#9CA3AF; --border:#263049;
+    --tint:#1E5EFF26; --shadow:0 2px 8px rgba(0,0,0,.4); --code-bg:#0A1020;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1424; --surface:#161E33; --text:#E5E7EB; --muted:#9CA3AF; --border:#263049;
+  --tint:#1E5EFF26; --shadow:0 2px 8px rgba(0,0,0,.4); --code-bg:#0A1020;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,sans-serif}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;line-height:1.25;margin:0}
+a{color:var(--primary)}
+code{font-size:.9em;background:var(--tint);padding:1px 6px;border-radius:6px}
+
+/* Barra superior entre documentos */
+.topnav{background:var(--primary-dark);border-bottom:1px solid #FFFFFF1F}
+.topnav .wrap{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:28px;overflow-x:auto}
+.topnav .brand{padding:14px 0;font-size:17px}
+.topnav nav{display:flex;gap:4px}
+.topnav nav a{color:#C7D2FE;text-decoration:none;font-size:14px;font-weight:500;padding:16px 12px;white-space:nowrap;border-bottom:3px solid transparent}
+.topnav nav a:hover{color:#fff}
+.topnav nav a[aria-current="page"]{color:#fff;border-bottom-color:var(--accent)}
+
+/* Encabezado */
+.hero{background:var(--primary-dark);color:#fff;padding:48px 24px 48px}
+.hero .wrap{max-width:1200px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-family:Poppins;font-weight:600;font-size:20px;color:#fff}
+.brand svg{width:26px;height:26px;flex:none}
+.hero h1{font-size:clamp(30px,5vw,44px);margin:0 0 12px}
+.hero p{color:#C7D2FE;max-width:760px;margin:0;font-size:18px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.meta span{background:#FFFFFF1A;border:1px solid #FFFFFF26;padding:4px 12px;border-radius:999px;font-size:13px}
+
+/* Estructura */
+.layout{max-width:1200px;margin:0 auto;padding:40px 24px 80px;display:grid;grid-template-columns:220px 1fr;gap:48px}
+nav.toc{position:sticky;top:24px;align-self:start;font-size:14px}
+nav.toc h4{font:600 12px Inter;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:24px 0 8px}
+nav.toc h4:first-child{margin-top:0}
+nav.toc a{display:block;padding:5px 10px;border-radius:8px;color:var(--text);text-decoration:none}
+nav.toc a:hover{background:var(--tint);color:var(--primary)}
+main{min-width:0}
+section.block{margin-bottom:64px;scroll-margin-top:24px}
+section.block>h2{font-size:28px;margin-bottom:8px}
+section.block h3{font-size:19px;margin:28px 0 12px}
+.lead{color:var(--muted);margin:0 0 24px;max-width:780px}
+
+/* Tablas */
+.table-scroll{overflow-x:auto;border-radius:12px}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:15px}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--bg);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.id{font-family:Poppins;font-weight:600;color:var(--primary);white-space:nowrap}
+
+/* Tarjetas */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+.card h3{font-size:17px;margin:0 0 6px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.card .icon{width:40px;height:40px;border-radius:12px;background:var(--tint);color:var(--primary);display:flex;align-items:center;justify-content:center;font:700 18px Poppins;margin-bottom:12px}
+.stat{font:700 36px Poppins;color:var(--primary);line-height:1}
+.stat small{display:block;font:500 14px Inter;color:var(--muted);margin-top:6px}
+
+/* Etiquetas */
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-style:normal;font-size:13px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--border);white-space:nowrap}
+.tag.cu{color:var(--primary);background:var(--tint);border-color:transparent}
+.tag.rn{color:#B45309;background:#F59E0B1F;border-color:transparent}
+.tag.hi{color:#B91C1C;background:#DC26261A;border-color:transparent}
+.tag.ok{color:#15803D;background:#16A34A1F;border-color:transparent}
+
+/* Diagramas */
+.diagram{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;overflow-x:auto;color:#1F2937}
+.diagram .mermaid{display:flex;justify-content:center;min-width:560px;background:transparent;color:#1F2937;padding:0;border-radius:0;font-family:Inter,sans-serif}
+.diagram .mermaid .edgeLabel,.diagram .mermaid .edgeLabel rect,.diagram .mermaid .labelBkg{background:#fff!important;fill:#fff!important}
+.caption{font-size:14px;color:var(--muted);margin:10px 0 0}
+
+/* Código */
+pre{background:var(--code-bg);color:var(--code-text);border-radius:14px;padding:20px;overflow-x:auto;font:13.5px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;margin:0}
+pre code{background:none;padding:0;font-size:inherit;color:inherit}
+details{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:12px}
+details>summary{cursor:pointer;padding:14px 18px;font-weight:600;list-style:none;display:flex;align-items:center;gap:10px}
+details>summary::before{content:"▸";color:var(--primary);transition:transform .15s}
+details[open]>summary::before{transform:rotate(90deg)}
+details>.inner{padding:0 18px 18px}
+
+footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;gap:24px;padding:24px 16px 64px}
+  nav.toc{display:none}
+  .hero{padding:36px 16px}
+  .topnav .wrap{padding:0 16px;gap:16px}
+}
+</style>
+<style>
+.uc{background:var(--surface);border:1px solid var(--border);border-radius:16px;margin-bottom:20px;overflow:hidden;scroll-margin-top:24px}
+.uc header{display:flex;align-items:center;gap:12px;flex-wrap:wrap;padding:18px 22px;border-bottom:1px solid var(--border)}
+.uc header h3{margin:0;font-size:19px}
+.uc .code{font:700 14px Poppins;color:var(--primary);background:var(--tint);padding:4px 10px;border-radius:8px}
+.uc .grid{display:grid;grid-template-columns:150px 1fr;font-size:15px}
+.uc .grid>div{padding:12px 22px;border-bottom:1px solid var(--border)}
+.uc .grid>div:nth-child(odd){color:var(--muted);font-size:13px;font-weight:600;text-transform:uppercase;letter-spacing:.04em;background:var(--bg)}
+.uc .grid>div:nth-last-child(-n+2){border-bottom:0}
+.uc ol,.uc ul{margin:0;padding-left:20px}
+.uc li{margin-bottom:4px}
+@media (max-width:700px){.uc .grid{grid-template-columns:1fr}.uc .grid>div:nth-child(odd){border-bottom:0;padding-bottom:4px}}
+</style>
+</head>
+<body>
+
+<div class="topnav"><div class="wrap">
+  <a class="brand" href="requerimientos.html" style="text-decoration:none"><svg viewBox="0 0 24 24" fill="#14B8A6" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4V6a1 1 0 0 1 1-1zm9 2v2h2V7h-2zm0 4v2h2v-2h-2zm0 4v2h2v-2h-2z"/></svg>TurnoFácil</a>
+  <nav aria-label="Documentos">
+    <a href="requerimientos.html">Requerimientos</a>
+    <a href="casos-de-uso.html" aria-current="page">Casos de uso</a>
+    <a href="documentacion-pantallas.html">Pantallas</a>
+    <a href="arquitectura.html">Arquitectura</a>
+    <a href="base-de-datos.html">Base de datos</a>
+  </nav>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <h1>Casos de uso</h1>
+  <p>Ocho casos de uso cubren lo que hacen los tres actores. Cinco de ellos requieren iniciar sesión primero.</p>
+  <div class="meta"><span>Grupo 2</span><span>Ingeniería de Software II · UNICARIBE</span><span>Entrega 1 · 08/10/2026</span></div>
+</div></header>
+
+<div class="layout">
+  <nav class="toc" aria-label="Contenido">
+    <h4>General</h4>
+    <a href="#actores">Actores</a>
+    <a href="#diagrama">Diagrama</a>
+    <a href="#estados">Estados del turno</a>
+    <h4>Especificación</h4>
+    <a href="#cu01">CU-01 Iniciar sesión</a>
+    <a href="#cu02">CU-02 Registrar servicio</a>
+    <a href="#cu03">CU-03 Generar turno</a>
+    <a href="#cu04">CU-04 Ver turno actual</a>
+    <a href="#cu05">CU-05 Llamar siguiente</a>
+    <a href="#cu06">CU-06 Marcar atendido</a>
+    <a href="#cu07">CU-07 Consultar turnos</a>
+    <a href="#cu08">CU-08 Usuarios y ventanillas</a>
+  </nav>
+
+  <main>
+    <section class="block" id="actores">
+      <h2>Actores</h2>
+      <p class="lead">Los tres son actores primarios: cada uno inicia sus propios casos de uso.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Actor</th><th>Descripción</th><th>Casos de uso</th></tr></thead>
+        <tbody>
+          <tr><td><b>Cliente</b></td><td>Saca turno y consulta la pantalla pública.</td><td><div class="tags"><i class="tag cu">CU-03</i><i class="tag cu">CU-04</i></div></td></tr>
+          <tr><td><b>Recepcionista</b></td><td>Llama y cierra turnos en su ventanilla.</td><td><div class="tags"><i class="tag cu">CU-01</i><i class="tag cu">CU-05</i><i class="tag cu">CU-06</i><i class="tag cu">CU-07</i></div></td></tr>
+          <tr><td><b>Administrador</b></td><td>Configura el sistema y consulta reportes.</td><td><div class="tags"><i class="tag cu">CU-01</i><i class="tag cu">CU-02</i><i class="tag cu">CU-07</i><i class="tag cu">CU-08</i></div></td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="block" id="diagrama">
+      <h2>Diagrama de casos de uso</h2>
+      <p class="lead">Las líneas punteadas son relaciones «include»: esos casos necesitan una sesión iniciada.</p>
+      <div class="diagram"><pre class="mermaid">
+flowchart LR
+    C([Cliente]):::actor
+    R([Recepcionista]):::actor
+    A([Administrador]):::actor
+    subgraph S[Sistema de Turnos]
+      CU03((CU-03<br/>Generar turno))
+      CU04((CU-04<br/>Ver turno actual))
+      CU05((CU-05<br/>Llamar siguiente))
+      CU06((CU-06<br/>Marcar atendido))
+      CU07((CU-07<br/>Consultar turnos))
+      CU02((CU-02<br/>Registrar servicio))
+      CU08((CU-08<br/>Usuarios y<br/>ventanillas))
+      CU01((CU-01<br/>Iniciar sesión))
+    end
+    C --> CU03
+    C --> CU04
+    R --> CU05
+    R --> CU06
+    R --> CU07
+    A --> CU07
+    A --> CU02
+    A --> CU08
+    CU05 -. include .-> CU01
+    CU06 -. include .-> CU01
+    CU07 -. include .-> CU01
+    CU02 -. include .-> CU01
+    CU08 -. include .-> CU01
+    classDef actor fill:#0B2A6F,color:#fff,stroke:#0B2A6F
+      </pre></div>
+    </section>
+
+    <section class="block" id="estados">
+      <h2>Estados del turno</h2>
+      <p class="lead">Un turno nace en espera y termina atendido, no presentado o cancelado (RN-05).</p>
+      <div class="diagram"><pre class="mermaid">
+stateDiagram-v2
+    direction LR
+    [*] --> EN_ESPERA : Generar turno (CU-03)
+    EN_ESPERA --> LLAMADO : Llamar siguiente (CU-05)
+    LLAMADO --> LLAMADO : Volver a llamar
+    LLAMADO --> ATENDIDO : Atendido (CU-06)
+    LLAMADO --> NO_PRESENTADO : No se presentó (CU-06)
+    EN_ESPERA --> CANCELADO : Admin cancela
+    ATENDIDO --> [*]
+    NO_PRESENTADO --> [*]
+    CANCELADO --> [*]
+      </pre></div>
+    </section>
+
+    <section class="block">
+      <h2>Especificación</h2>
+      <p class="lead">Flujo principal, flujos alternos y condiciones de cada caso de uso.</p>
+
+      <article class="uc" id="cu01">
+        <header><span class="code">CU-01</span><h3>Iniciar sesión</h3><div class="tags"><i class="tag">RF-01</i><i class="tag">P3</i></div></header>
+        <div class="grid">
+          <div>Actor</div><div>Recepcionista, Administrador</div>
+          <div>Precondición</div><div>El usuario existe y está activo.</div>
+          <div>Flujo principal</div><div><ol><li>El usuario abre el sistema.</li><li>Ingresa usuario y contraseña.</li><li>El sistema valida las credenciales.</li><li>Muestra el menú según el rol.</li></ol></div>
+          <div>Flujos alternos</div><div><ul><li><b>3a.</b> Credenciales inválidas → «Usuario o contraseña inválidos».</li><li><b>3b.</b> Usuario inactivo → «Usuario deshabilitado, contacte al administrador».</li></ul></div>
+          <div>Postcondición</div><div>Sesión activa con su rol.</div>
+        </div>
+      </article>
+
+      <article class="uc" id="cu02">
+        <header><span class="code">CU-02</span><h3>Registrar servicio</h3><div class="tags"><i class="tag">RF-02</i><i class="tag">P5</i><i class="tag">P5a</i></div></header>
+        <div class="grid">
+          <div>Actor</div><div>Administrador</div>
+          <div>Precondición</div><div>Sesión iniciada como administrador.</div>
+          <div>Flujo principal</div><div><ol><li>Entra a <i>Servicios</i>.</li><li>Pulsa <i>Nuevo servicio</i>.</li><li>Ingresa nombre, prefijo y descripción.</li><li>Pulsa <i>Guardar</i>.</li><li>El sistema valida y lo muestra en la lista.</li></ol></div>
+          <div>Flujos alternos</div><div><ul><li><b>5a.</b> Prefijo duplicado → pide otro.</li><li><b>5b.</b> Campos obligatorios vacíos → los marca en rojo.</li><li><b>1a.</b> Editar o desactivar: elige un servicio, cambia datos o estado y guarda (RN-04).</li></ul></div>
+          <div>Postcondición</div><div>El servicio aparece (o deja de aparecer) en el kiosco.</div>
+        </div>
+      </article>
+
+      <article class="uc" id="cu03">
+        <header><span class="code">CU-03</span><h3>Generar turno</h3><div class="tags"><i class="tag">RF-03</i><i class="tag">P1</i><i class="tag">P1b</i></div></header>
+        <div class="grid">
+          <div>Actor</div><div>Cliente</div>
+          <div>Precondición</div><div>Existe al menos un servicio activo.</div>
+          <div>Flujo principal</div><div><ol><li>El cliente toca un servicio en el kiosco.</li><li>El sistema calcula el siguiente número del día para ese servicio (RN-01).</li><li>Crea el turno en estado <code>EN_ESPERA</code>.</li><li>Muestra el código (C-015) y las personas delante.</li></ol></div>
+          <div>Flujos alternos</div><div><ul><li><b>2a.</b> Error de conexión → «Intente de nuevo»; no se crea el turno.</li></ul></div>
+          <div>Postcondición</div><div>Turno <code>EN_ESPERA</code> en la cola del servicio.</div>
+        </div>
+      </article>
+
+      <article class="uc" id="cu04">
+        <header><span class="code">CU-04</span><h3>Ver turno actual</h3><div class="tags"><i class="tag">RF-04</i><i class="tag">P2</i></div></header>
+        <div class="grid">
+          <div>Actor</div><div>Cliente</div>
+          <div>Precondición</div><div>Pantalla pública encendida.</div>
+          <div>Flujo principal</div><div><ol><li>La pantalla consulta los turnos llamados cada 3 segundos.</li><li>Muestra en grande el último turno y su ventanilla.</li><li>Lista los 5 anteriores.</li><li>Si hay un llamado nuevo, lo resalta y emite un tono.</li></ol></div>
+          <div>Flujos alternos</div><div><ul><li><b>1a.</b> Sin turnos llamados hoy → «Bienvenido, en breve le atenderemos».</li></ul></div>
+          <div>Postcondición</div><div>Ninguna (solo lectura).</div>
+        </div>
+      </article>
+
+      <article class="uc" id="cu05">
+        <header><span class="code">CU-05</span><h3>Llamar siguiente turno</h3><div class="tags"><i class="tag">RF-05</i><i class="tag">P4b</i></div></header>
+        <div class="grid">
+          <div>Actor</div><div>Recepcionista</div>
+          <div>Precondición</div><div>Sesión iniciada, ventanilla asignada y sin turno abierto (RN-03).</div>
+          <div>Flujo principal</div><div><ol><li>Pulsa <i>Llamar siguiente</i>.</li><li>El sistema busca el turno <code>EN_ESPERA</code> más antiguo de los servicios de su ventanilla (RN-02).</li><li>Lo cambia a <code>LLAMADO</code> con hora, ventanilla y usuario.</li><li>El turno aparece en la pantalla pública.</li></ol></div>
+          <div>Flujos alternos</div><div><ul><li><b>2a.</b> No hay turnos en espera → «No hay clientes en espera».</li><li><b>1a.</b> Tiene un turno abierto → el botón está deshabilitado.</li></ul></div>
+          <div>Postcondición</div><div>Turno en estado <code>LLAMADO</code>.</div>
+        </div>
+      </article>
+
+      <article class="uc" id="cu06">
+        <header><span class="code">CU-06</span><h3>Marcar atendido</h3><div class="tags"><i class="tag">RF-06</i><i class="tag">P4</i></div></header>
+        <div class="grid">
+          <div>Actor</div><div>Recepcionista</div>
+          <div>Precondición</div><div>Tiene un turno <code>LLAMADO</code>.</div>
+          <div>Flujo principal</div><div><ol><li>Termina la atención.</li><li>Pulsa <i>Atendido</i>.</li><li>El sistema guarda la hora de fin y el estado <code>ATENDIDO</code>.</li></ol></div>
+          <div>Flujos alternos</div><div><ul><li><b>2a.</b> El cliente no llegó → <i>No se presentó</i> → <code>NO_PRESENTADO</code>.</li><li><b>2b.</b> <i>Volver a llamar</i> → el turno se anuncia otra vez en pantalla.</li></ul></div>
+          <div>Postcondición</div><div>Ventanilla libre para llamar otro turno.</div>
+        </div>
+      </article>
+
+      <article class="uc" id="cu07">
+        <header><span class="code">CU-07</span><h3>Consultar turnos</h3><div class="tags"><i class="tag">RF-07</i><i class="tag">P6</i></div></header>
+        <div class="grid">
+          <div>Actor</div><div>Administrador, Recepcionista</div>
+          <div>Precondición</div><div>Sesión iniciada.</div>
+          <div>Flujo principal</div><div><ol><li>Entra a <i>Consultar turnos</i>.</li><li>Filtra por fecha, servicio y estado.</li><li>El sistema muestra la tabla y los totales: atendidos, no presentados y espera promedio.</li></ol></div>
+          <div>Flujos alternos</div><div><ul><li><b>3a.</b> Sin resultados → «Sin turnos para ese filtro».</li></ul></div>
+          <div>Postcondición</div><div>Ninguna (solo lectura).</div>
+        </div>
+      </article>
+
+      <article class="uc" id="cu08">
+        <header><span class="code">CU-08</span><h3>Gestionar usuarios y ventanillas</h3><div class="tags"><i class="tag">RF-08</i><i class="tag">P5b</i><i class="tag">P5c</i><i class="tag">P5d</i></div></header>
+        <div class="grid">
+          <div>Actor</div><div>Administrador</div>
+          <div>Precondición</div><div>Sesión iniciada como administrador.</div>
+          <div>Flujo principal</div><div><ol><li>Crea una ventanilla y marca los servicios que atiende.</li><li>Crea un usuario recepcionista con nombre, usuario y contraseña.</li><li>Lo asigna a la ventanilla.</li><li>Guarda.</li></ol></div>
+          <div>Flujos alternos</div><div><ul><li><b>2a.</b> Usuario duplicado → pide otro.</li><li><b>3a.</b> Desactivar usuario → ya no puede iniciar sesión.</li></ul></div>
+          <div>Postcondición</div><div>El recepcionista puede atender en esa ventanilla.</div>
+        </div>
+      </article>
+    </section>
+  </main>
+</div>
+
+<footer>TurnoFácil · Grupo 2 · Ingeniería de Software II · UNICARIBE · 2026</footer>
+
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs';
+mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: {
+  primaryColor: '#E8EEFF', primaryBorderColor: '#1E5EFF', primaryTextColor: '#1F2937',
+  lineColor: '#6B7280', secondaryColor: '#E6F7F5', tertiaryColor: '#F5F7FB', fontFamily: 'Inter, sans-serif'
+}});
+</script>
+</body>
+</html>

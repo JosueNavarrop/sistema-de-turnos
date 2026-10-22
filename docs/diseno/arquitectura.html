@@ -1,0 +1,349 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TurnoFácil · Arquitectura</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#1E5EFF; --primary-dark:#0B2A6F; --accent:#14B8A6;
+  --bg:#F5F7FB; --surface:#FFFFFF; --text:#1F2937; --muted:#6B7280; --border:#E5E7EB;
+  --tint:#1E5EFF14; --shadow:0 2px 8px rgba(0,0,0,.08);
+  --code-bg:#0B2A6F; --code-text:#E0E7FF;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1424; --surface:#161E33; --text:#E5E7EB; --muted:#9CA3AF; --border:#263049;
+    --tint:#1E5EFF26; --shadow:0 2px 8px rgba(0,0,0,.4); --code-bg:#0A1020;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1424; --surface:#161E33; --text:#E5E7EB; --muted:#9CA3AF; --border:#263049;
+  --tint:#1E5EFF26; --shadow:0 2px 8px rgba(0,0,0,.4); --code-bg:#0A1020;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,sans-serif}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;line-height:1.25;margin:0}
+a{color:var(--primary)}
+code{font-size:.9em;background:var(--tint);padding:1px 6px;border-radius:6px}
+
+/* Barra superior entre documentos */
+.topnav{background:var(--primary-dark);border-bottom:1px solid #FFFFFF1F}
+.topnav .wrap{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:28px;overflow-x:auto}
+.topnav .brand{padding:14px 0;font-size:17px}
+.topnav nav{display:flex;gap:4px}
+.topnav nav a{color:#C7D2FE;text-decoration:none;font-size:14px;font-weight:500;padding:16px 12px;white-space:nowrap;border-bottom:3px solid transparent}
+.topnav nav a:hover{color:#fff}
+.topnav nav a[aria-current="page"]{color:#fff;border-bottom-color:var(--accent)}
+
+/* Encabezado */
+.hero{background:var(--primary-dark);color:#fff;padding:48px 24px 48px}
+.hero .wrap{max-width:1200px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-family:Poppins;font-weight:600;font-size:20px;color:#fff}
+.brand svg{width:26px;height:26px;flex:none}
+.hero h1{font-size:clamp(30px,5vw,44px);margin:0 0 12px}
+.hero p{color:#C7D2FE;max-width:760px;margin:0;font-size:18px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.meta span{background:#FFFFFF1A;border:1px solid #FFFFFF26;padding:4px 12px;border-radius:999px;font-size:13px}
+
+/* Estructura */
+.layout{max-width:1200px;margin:0 auto;padding:40px 24px 80px;display:grid;grid-template-columns:220px 1fr;gap:48px}
+nav.toc{position:sticky;top:24px;align-self:start;font-size:14px}
+nav.toc h4{font:600 12px Inter;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:24px 0 8px}
+nav.toc h4:first-child{margin-top:0}
+nav.toc a{display:block;padding:5px 10px;border-radius:8px;color:var(--text);text-decoration:none}
+nav.toc a:hover{background:var(--tint);color:var(--primary)}
+main{min-width:0}
+section.block{margin-bottom:64px;scroll-margin-top:24px}
+section.block>h2{font-size:28px;margin-bottom:8px}
+section.block h3{font-size:19px;margin:28px 0 12px}
+.lead{color:var(--muted);margin:0 0 24px;max-width:780px}
+
+/* Tablas */
+.table-scroll{overflow-x:auto;border-radius:12px}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:15px}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--bg);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.id{font-family:Poppins;font-weight:600;color:var(--primary);white-space:nowrap}
+
+/* Tarjetas */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+.card h3{font-size:17px;margin:0 0 6px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.card .icon{width:40px;height:40px;border-radius:12px;background:var(--tint);color:var(--primary);display:flex;align-items:center;justify-content:center;font:700 18px Poppins;margin-bottom:12px}
+.stat{font:700 36px Poppins;color:var(--primary);line-height:1}
+.stat small{display:block;font:500 14px Inter;color:var(--muted);margin-top:6px}
+
+/* Etiquetas */
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-style:normal;font-size:13px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--border);white-space:nowrap}
+.tag.cu{color:var(--primary);background:var(--tint);border-color:transparent}
+.tag.rn{color:#B45309;background:#F59E0B1F;border-color:transparent}
+.tag.hi{color:#B91C1C;background:#DC26261A;border-color:transparent}
+.tag.ok{color:#15803D;background:#16A34A1F;border-color:transparent}
+
+/* Diagramas */
+.diagram{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;overflow-x:auto;color:#1F2937}
+.diagram .mermaid{display:flex;justify-content:center;min-width:560px;background:transparent;color:#1F2937;padding:0;border-radius:0;font-family:Inter,sans-serif}
+.diagram .mermaid .edgeLabel,.diagram .mermaid .edgeLabel rect,.diagram .mermaid .labelBkg{background:#fff!important;fill:#fff!important}
+.caption{font-size:14px;color:var(--muted);margin:10px 0 0}
+
+/* Código */
+pre{background:var(--code-bg);color:var(--code-text);border-radius:14px;padding:20px;overflow-x:auto;font:13.5px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;margin:0}
+pre code{background:none;padding:0;font-size:inherit;color:inherit}
+details{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:12px}
+details>summary{cursor:pointer;padding:14px 18px;font-weight:600;list-style:none;display:flex;align-items:center;gap:10px}
+details>summary::before{content:"▸";color:var(--primary);transition:transform .15s}
+details[open]>summary::before{transform:rotate(90deg)}
+details>.inner{padding:0 18px 18px}
+
+footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;gap:24px;padding:24px 16px 64px}
+  nav.toc{display:none}
+  .hero{padding:36px 16px}
+  .topnav .wrap{padding:0 16px;gap:16px}
+}
+</style>
+<style>
+.layers{display:flex;flex-direction:column;gap:0}
+.layer{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px 24px;display:grid;grid-template-columns:200px 1fr;gap:20px;align-items:center}
+.layer h3{margin:0;font-size:17px}
+.layer .tech{font-size:13px;color:var(--muted);margin-top:4px}
+.layer .parts{display:flex;flex-wrap:wrap;gap:8px}
+.layer .part{background:var(--bg);border:1px solid var(--border);border-radius:10px;padding:8px 12px;font-size:14px}
+.layer.front{border-color:#1E5EFF55}.layer.front h3{color:var(--primary)}
+.layer.back{border-color:#14B8A655}.layer.back h3{color:#0F766E}
+.layer.data{border-color:#F59E0B66}.layer.data h3{color:#B45309}
+.link{display:flex;align-items:center;justify-content:center;gap:10px;padding:10px 0;color:var(--muted);font-size:13px}
+.link::before,.link::after{content:"";width:1px;height:14px;background:var(--border)}
+.link span{background:var(--tint);color:var(--primary);padding:3px 10px;border-radius:999px;font-weight:600}
+.method{font:700 12px ui-monospace,Menlo,monospace;padding:3px 8px;border-radius:6px;white-space:nowrap}
+.m-get{color:#15803D;background:#16A34A1F}.m-post{color:#1E40AF;background:#1E5EFF1F}.m-put{color:#B45309;background:#F59E0B1F}
+@media (max-width:700px){.layer{grid-template-columns:1fr;gap:12px}}
+</style>
+</head>
+<body>
+
+<div class="topnav"><div class="wrap">
+  <a class="brand" href="requerimientos.html" style="text-decoration:none"><svg viewBox="0 0 24 24" fill="#14B8A6" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4V6a1 1 0 0 1 1-1zm9 2v2h2V7h-2zm0 4v2h2v-2h-2zm0 4v2h2v-2h-2z"/></svg>TurnoFácil</a>
+  <nav aria-label="Documentos">
+    <a href="requerimientos.html">Requerimientos</a>
+    <a href="casos-de-uso.html">Casos de uso</a>
+    <a href="documentacion-pantallas.html">Pantallas</a>
+    <a href="arquitectura.html" aria-current="page">Arquitectura</a>
+    <a href="base-de-datos.html">Base de datos</a>
+  </nav>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <h1>Arquitectura</h1>
+  <p>Aplicación web cliente-servidor en 3 capas: un frontend en Vue 3 consume una API REST en FastAPI, que guarda los datos en MySQL.</p>
+  <div class="meta"><span>Vue 3 + Vite</span><span>Python 3.12 + FastAPI</span><span>MySQL 8</span><span>JWT + bcrypt</span></div>
+</div></header>
+
+<div class="layout">
+  <nav class="toc" aria-label="Contenido">
+    <h4>Contenido</h4>
+    <a href="#capas">Capas</a>
+    <a href="#tecnologias">Tecnologías</a>
+    <a href="#despliegue">Despliegue</a>
+    <a href="#estructura">Estructura del proyecto</a>
+    <a href="#rutas">Rutas del frontend</a>
+    <a href="#api">API REST</a>
+    <a href="#secuencia">Flujo: llamar siguiente</a>
+    <a href="#decisiones">Decisiones de diseño</a>
+  </nav>
+
+  <main>
+    <section class="block" id="capas">
+      <h2>Capas</h2>
+      <p class="lead">Cada capa solo habla con la de abajo. Las reglas de negocio viven en el backend, nunca en el navegador.</p>
+      <div class="layers">
+        <div class="layer front">
+          <div><h3>Presentación</h3><div class="tech">Vue 3 · Vue Router · Pinia</div></div>
+          <div class="parts"><span class="part">Kiosco (P1)</span><span class="part">Pantalla pública (P2)</span><span class="part">Login (P3)</span><span class="part">Recepción (P4)</span><span class="part">Administración (P5)</span><span class="part">Turnos (P6)</span></div>
+        </div>
+        <div class="link"><span>HTTP · JSON · JWT</span></div>
+        <div class="layer back">
+          <div><h3>Lógica</h3><div class="tech">Python · FastAPI · Uvicorn</div></div>
+          <div class="parts"><span class="part">Routers</span><span class="part">Servicios (RN-01 a RN-05)</span><span class="part">Schemas Pydantic</span><span class="part">Auth y roles</span></div>
+        </div>
+        <div class="link"><span>SQLAlchemy 2 · PyMySQL</span></div>
+        <div class="layer data">
+          <div><h3>Datos</h3><div class="tech">MySQL 8</div></div>
+          <div class="parts"><span class="part">usuarios</span><span class="part">servicios</span><span class="part">ventanillas</span><span class="part">ventanilla_servicio</span><span class="part">turnos</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="tecnologias">
+      <h2>Tecnologías</h2>
+      <p class="lead">Herramientas gratuitas, conocidas por el equipo y con documentación abundante.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Capa</th><th>Tecnología</th><th>Por qué</th></tr></thead>
+        <tbody>
+          <tr><td>Frontend</td><td><b>Vue 3 + Vite</b></td><td>Fácil de aprender; componentes reutilizables (tarjeta de servicio, etiqueta de estado).</td></tr>
+          <tr><td>Navegación</td><td><b>Vue Router</b></td><td>Una ruta por pantalla y guardias por rol.</td></tr>
+          <tr><td>Estado</td><td><b>Pinia</b></td><td>Guarda la sesión (token, rol, ventanilla) compartida entre vistas.</td></tr>
+          <tr><td>HTTP</td><td><b>Axios</b></td><td>Interceptor que agrega el JWT a cada petición.</td></tr>
+          <tr><td>Backend</td><td><b>FastAPI + Uvicorn</b></td><td>API rápida de construir; documentación Swagger automática en <code>/docs</code>.</td></tr>
+          <tr><td>Validación</td><td><b>Pydantic v2</b></td><td>Valida entradas y salidas sin código extra.</td></tr>
+          <tr><td>Acceso a datos</td><td><b>SQLAlchemy 2 + PyMySQL</b></td><td>ORM con consultas parametrizadas, seguras contra inyección SQL.</td></tr>
+          <tr><td>Seguridad</td><td><b>PyJWT + bcrypt</b></td><td>Sesiones sin estado y contraseñas cifradas (RNF-03).</td></tr>
+          <tr><td>Base de datos</td><td><b>MySQL 8</b></td><td>Modelo relacional, gratuito y conocido por el grupo.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="block" id="despliegue">
+      <h2>Despliegue</h2>
+      <p class="lead">Todo corre en un servidor de la red local. Los dispositivos solo necesitan un navegador.</p>
+      <div class="diagram"><pre class="mermaid">
+flowchart TB
+    K[Tablet kiosco<br/>navegador]:::dev
+    T[TV pantalla pública<br/>navegador]:::dev
+    P[PC recepción / admin<br/>navegador]:::dev
+    subgraph SRV[Servidor en la red local]
+      V[Frontend Vue · build estático<br/>:5173]
+      F[FastAPI / Uvicorn<br/>:8000]
+      M[(MySQL<br/>:3306)]
+    end
+    K -- Wi-Fi / LAN --> V
+    T -- Wi-Fi / LAN --> V
+    P -- Wi-Fi / LAN --> V
+    V -- REST JSON --> F
+    F -- SQL --> M
+    classDef dev fill:#F5F7FB,stroke:#6B7280,color:#1F2937
+      </pre></div>
+      <p class="caption">En desarrollo, Vite sirve el frontend en :5173 y FastAPI en :8000 con CORS habilitado para ese origen.</p>
+    </section>
+
+    <section class="block" id="estructura">
+      <h2>Estructura del proyecto</h2>
+      <p class="lead">Un repositorio con tres carpetas: backend, frontend y base de datos.</p>
+<pre><code>turnofacil/
+├── backend/
+│   ├── app/
+│   │   ├── main.py            # crea la app, CORS, incluye routers
+│   │   ├── config.py          # variables de entorno (DB, JWT_SECRET)
+│   │   ├── database.py        # engine y sesión de SQLAlchemy
+│   │   ├── models/            # ORM: usuario, servicio, ventanilla, turno
+│   │   ├── schemas/           # Pydantic: entrada/salida de la API
+│   │   ├── services/          # reglas de negocio (RN-01..05)
+│   │   ├── routers/           # auth, servicios, ventanillas, usuarios, turnos
+│   │   └── core/security.py   # JWT, hash, get_usuario / requiere_rol
+│   ├── requirements.txt
+│   └── .env.example
+├── frontend/
+│   ├── src/
+│   │   ├── views/             # KioscoView, PantallaView, LoginView,
+│   │   │                      # RecepcionView, AdminView, TurnosView
+│   │   ├── components/        # BotonServicio, EtiquetaEstado, TarjetaTurno
+│   │   ├── router/index.js    # rutas + guardias por rol
+│   │   ├── stores/sesion.js   # Pinia: token, rol, ventanilla
+│   │   ├── api/               # cliente Axios
+│   │   └── assets/estilos.css # tokens de la línea gráfica
+│   └── package.json
+└── database/
+    └── schema.sql</code></pre>
+    </section>
+
+    <section class="block" id="rutas">
+      <h2>Rutas del frontend</h2>
+      <p class="lead">Las rutas protegidas redirigen al login si no hay sesión o si el rol no corresponde.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Ruta</th><th>Vista</th><th>Pantalla</th><th>Acceso</th></tr></thead>
+        <tbody>
+          <tr><td><code>/kiosco</code></td><td>KioscoView</td><td><a href="documentacion-pantallas.html#p1">P1</a>, <a href="documentacion-pantallas.html#p1b">P1b</a></td><td><i class="tag ok">Público</i></td></tr>
+          <tr><td><code>/pantalla</code></td><td>PantallaView</td><td><a href="documentacion-pantallas.html#p2">P2</a></td><td><i class="tag ok">Público</i></td></tr>
+          <tr><td><code>/login</code></td><td>LoginView</td><td><a href="documentacion-pantallas.html#p3">P3</a></td><td><i class="tag ok">Público</i></td></tr>
+          <tr><td><code>/recepcion</code></td><td>RecepcionView</td><td><a href="documentacion-pantallas.html#p4">P4</a>, <a href="documentacion-pantallas.html#p4b">P4b</a></td><td><i class="tag cu">Recepcionista</i></td></tr>
+          <tr><td><code>/admin</code></td><td>AdminView</td><td><a href="documentacion-pantallas.html#p5">P5</a> a <a href="documentacion-pantallas.html#p5d">P5d</a></td><td><i class="tag cu">Administrador</i></td></tr>
+          <tr><td><code>/turnos</code></td><td>TurnosView</td><td><a href="documentacion-pantallas.html#p6">P6</a></td><td><i class="tag cu">Admin, Recepcionista</i></td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="block" id="api">
+      <h2>API REST</h2>
+      <p class="lead">Once endpoints bajo <code>/api</code>. FastAPI publica su documentación interactiva en <code>http://servidor:8000/docs</code>.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Método</th><th>Ruta</th><th>Descripción</th><th>Rol</th><th>RF</th></tr></thead>
+        <tbody>
+          <tr><td><span class="method m-post">POST</span></td><td><code>/api/auth/login</code></td><td>Iniciar sesión, devuelve JWT</td><td>Público</td><td>RF-01</td></tr>
+          <tr><td><span class="method m-get">GET</span></td><td><code>/api/servicios?activos=true</code></td><td>Listar servicios</td><td>Público</td><td>RF-03</td></tr>
+          <tr><td><span class="method m-post">POST</span></td><td><code>/api/servicios</code></td><td>Crear servicio</td><td>Admin</td><td>RF-02</td></tr>
+          <tr><td><span class="method m-put">PUT</span></td><td><code>/api/servicios/{id}</code></td><td>Editar, activar o desactivar</td><td>Admin</td><td>RF-02</td></tr>
+          <tr><td><span class="method m-post">POST</span></td><td><code>/api/turnos</code></td><td>Generar turno <code>{id_servicio}</code></td><td>Público</td><td>RF-03</td></tr>
+          <tr><td><span class="method m-get">GET</span></td><td><code>/api/turnos/actual</code></td><td>Turno actual y últimos 5</td><td>Público</td><td>RF-04</td></tr>
+          <tr><td><span class="method m-post">POST</span></td><td><code>/api/turnos/siguiente</code></td><td>Llamar siguiente de mi ventanilla</td><td>Recepcionista</td><td>RF-05</td></tr>
+          <tr><td><span class="method m-put">PUT</span></td><td><code>/api/turnos/{id}/estado</code></td><td>Cerrar como ATENDIDO o NO_PRESENTADO</td><td>Recepcionista</td><td>RF-06</td></tr>
+          <tr><td><span class="method m-get">GET</span></td><td><code>/api/turnos?fecha=&amp;servicio=&amp;estado=</code></td><td>Consultar con filtros</td><td>Admin, Recep.</td><td>RF-07</td></tr>
+          <tr><td><span class="method m-get">GET</span> <span class="method m-post">POST</span> <span class="method m-put">PUT</span></td><td><code>/api/ventanillas</code></td><td>Gestionar ventanillas</td><td>Admin</td><td>RF-08</td></tr>
+          <tr><td><span class="method m-get">GET</span> <span class="method m-post">POST</span> <span class="method m-put">PUT</span></td><td><code>/api/usuarios</code></td><td>Gestionar usuarios</td><td>Admin</td><td>RF-08</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="block" id="secuencia">
+      <h2>Flujo: llamar siguiente turno</h2>
+      <p class="lead">El backend valida RN-03 y RN-02 antes de cambiar el estado. La pantalla pública se entera en la siguiente consulta, a más tardar en 3 segundos.</p>
+      <div class="diagram"><pre class="mermaid">
+sequenceDiagram
+    actor R as Recepcionista
+    participant UI as RecepcionView (Vue)
+    participant API as FastAPI /api/turnos
+    participant S as turno_service
+    participant DB as MySQL
+    participant P as PantallaView (Vue)
+    R->>UI: Clic "Llamar siguiente"
+    UI->>API: POST /siguiente (Bearer JWT)
+    API->>API: requiere_rol("RECEPCIONISTA")
+    API->>S: llamar_siguiente(id_ventanilla)
+    S->>DB: ¿turno LLAMADO abierto? (RN-03)
+    S->>DB: SELECT turno EN_ESPERA más antiguo (RN-02)
+    S->>DB: UPDATE estado = LLAMADO, hora_llamado
+    API-->>UI: 200 {codigo: "C-015"}
+    loop cada 3 s
+      P->>API: GET /actual
+      API-->>P: {codigo: "C-015", ventanilla: "Ventanilla 1"}
+    end
+      </pre></div>
+    </section>
+
+    <section class="block" id="decisiones">
+      <h2>Decisiones de diseño</h2>
+      <p class="lead">Se priorizó lo que se puede construir y probar en una semana para el MVP.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Decisión</th><th>Descartado</th><th>Motivo</th></tr></thead>
+        <tbody>
+          <tr><td><b>Vue 3 (SPA)</b></td><td>HTML + JS sin framework, React</td><td>Componentes reutilizables con curva de aprendizaje menor que React.</td></tr>
+          <tr><td><b>FastAPI</b></td><td>Node + Express, Django</td><td>Validación con Pydantic y Swagger automático, que apoya las pruebas y el manual técnico. Más liviano que Django.</td></tr>
+          <tr><td><b>Consulta cada 3 s</b> en la pantalla pública</td><td>WebSockets</td><td>Más simple para el MVP y cumple RNF-02. FastAPI soporta WebSockets si se migra después.</td></tr>
+          <tr><td><b>JWT</b></td><td>Sesiones en servidor</td><td>Sin estado; rutas protegidas por rol con una dependencia de FastAPI.</td></tr>
+          <tr><td><b>Número por servicio y día</b> en una transacción (<code>SELECT … FOR UPDATE</code>)</td><td>Contador global</td><td>Cumple RN-01 y evita números repetidos si dos kioscos generan turno a la vez.</td></tr>
+          <tr><td><b>SQLAlchemy ORM</b></td><td>SQL escrito a mano</td><td>Menos código repetido y consultas parametrizadas.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+  </main>
+</div>
+
+<footer>TurnoFácil · Grupo 2 · Ingeniería de Software II · UNICARIBE · 2026</footer>
+
+<script type="module">
+import mermaid from 'https://cdn.jsdelivr.net/npm/mermaid@10.9.1/dist/mermaid.esm.min.mjs';
+mermaid.initialize({ startOnLoad: true, theme: 'base', themeVariables: {
+  primaryColor: '#E8EEFF', primaryBorderColor: '#1E5EFF', primaryTextColor: '#1F2937',
+  lineColor: '#6B7280', secondaryColor: '#E6F7F5', tertiaryColor: '#F5F7FB',
+  actorBkg: '#0B2A6F', actorTextColor: '#FFFFFF', actorBorder: '#0B2A6F', fontFamily: 'Inter, sans-serif'
+}});
+</script>
+</body>
+</html>

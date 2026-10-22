@@ -1,0 +1,249 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TurnoFácil · Requerimientos</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#1E5EFF; --primary-dark:#0B2A6F; --accent:#14B8A6;
+  --bg:#F5F7FB; --surface:#FFFFFF; --text:#1F2937; --muted:#6B7280; --border:#E5E7EB;
+  --tint:#1E5EFF14; --shadow:0 2px 8px rgba(0,0,0,.08);
+  --code-bg:#0B2A6F; --code-text:#E0E7FF;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1424; --surface:#161E33; --text:#E5E7EB; --muted:#9CA3AF; --border:#263049;
+    --tint:#1E5EFF26; --shadow:0 2px 8px rgba(0,0,0,.4); --code-bg:#0A1020;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1424; --surface:#161E33; --text:#E5E7EB; --muted:#9CA3AF; --border:#263049;
+  --tint:#1E5EFF26; --shadow:0 2px 8px rgba(0,0,0,.4); --code-bg:#0A1020;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,sans-serif}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;line-height:1.25;margin:0}
+a{color:var(--primary)}
+code{font-size:.9em;background:var(--tint);padding:1px 6px;border-radius:6px}
+
+/* Barra superior entre documentos */
+.topnav{background:var(--primary-dark);border-bottom:1px solid #FFFFFF1F}
+.topnav .wrap{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:28px;overflow-x:auto}
+.topnav .brand{padding:14px 0;font-size:17px}
+.topnav nav{display:flex;gap:4px}
+.topnav nav a{color:#C7D2FE;text-decoration:none;font-size:14px;font-weight:500;padding:16px 12px;white-space:nowrap;border-bottom:3px solid transparent}
+.topnav nav a:hover{color:#fff}
+.topnav nav a[aria-current="page"]{color:#fff;border-bottom-color:var(--accent)}
+
+/* Encabezado */
+.hero{background:var(--primary-dark);color:#fff;padding:48px 24px 48px}
+.hero .wrap{max-width:1200px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-family:Poppins;font-weight:600;font-size:20px;color:#fff}
+.brand svg{width:26px;height:26px;flex:none}
+.hero h1{font-size:clamp(30px,5vw,44px);margin:0 0 12px}
+.hero p{color:#C7D2FE;max-width:760px;margin:0;font-size:18px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.meta span{background:#FFFFFF1A;border:1px solid #FFFFFF26;padding:4px 12px;border-radius:999px;font-size:13px}
+
+/* Estructura */
+.layout{max-width:1200px;margin:0 auto;padding:40px 24px 80px;display:grid;grid-template-columns:220px 1fr;gap:48px}
+nav.toc{position:sticky;top:24px;align-self:start;font-size:14px}
+nav.toc h4{font:600 12px Inter;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:24px 0 8px}
+nav.toc h4:first-child{margin-top:0}
+nav.toc a{display:block;padding:5px 10px;border-radius:8px;color:var(--text);text-decoration:none}
+nav.toc a:hover{background:var(--tint);color:var(--primary)}
+main{min-width:0}
+section.block{margin-bottom:64px;scroll-margin-top:24px}
+section.block>h2{font-size:28px;margin-bottom:8px}
+section.block h3{font-size:19px;margin:28px 0 12px}
+.lead{color:var(--muted);margin:0 0 24px;max-width:780px}
+
+/* Tablas */
+.table-scroll{overflow-x:auto;border-radius:12px}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:15px}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--bg);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.id{font-family:Poppins;font-weight:600;color:var(--primary);white-space:nowrap}
+
+/* Tarjetas */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+.card h3{font-size:17px;margin:0 0 6px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.card .icon{width:40px;height:40px;border-radius:12px;background:var(--tint);color:var(--primary);display:flex;align-items:center;justify-content:center;font:700 18px Poppins;margin-bottom:12px}
+.stat{font:700 36px Poppins;color:var(--primary);line-height:1}
+.stat small{display:block;font:500 14px Inter;color:var(--muted);margin-top:6px}
+
+/* Etiquetas */
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-style:normal;font-size:13px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--border);white-space:nowrap}
+.tag.cu{color:var(--primary);background:var(--tint);border-color:transparent}
+.tag.rn{color:#B45309;background:#F59E0B1F;border-color:transparent}
+.tag.hi{color:#B91C1C;background:#DC26261A;border-color:transparent}
+.tag.ok{color:#15803D;background:#16A34A1F;border-color:transparent}
+
+/* Diagramas */
+.diagram{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;overflow-x:auto;color:#1F2937}
+.diagram .mermaid{display:flex;justify-content:center;min-width:560px;background:transparent;color:#1F2937;padding:0;border-radius:0;font-family:Inter,sans-serif}
+.diagram .mermaid .edgeLabel,.diagram .mermaid .edgeLabel rect,.diagram .mermaid .labelBkg{background:#fff!important;fill:#fff!important}
+.caption{font-size:14px;color:var(--muted);margin:10px 0 0}
+
+/* Código */
+pre{background:var(--code-bg);color:var(--code-text);border-radius:14px;padding:20px;overflow-x:auto;font:13.5px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;margin:0}
+pre code{background:none;padding:0;font-size:inherit;color:inherit}
+details{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:12px}
+details>summary{cursor:pointer;padding:14px 18px;font-weight:600;list-style:none;display:flex;align-items:center;gap:10px}
+details>summary::before{content:"▸";color:var(--primary);transition:transform .15s}
+details[open]>summary::before{transform:rotate(90deg)}
+details>.inner{padding:0 18px 18px}
+
+footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;gap:24px;padding:24px 16px 64px}
+  nav.toc{display:none}
+  .hero{padding:36px 16px}
+  .topnav .wrap{padding:0 16px;gap:16px}
+}
+</style>
+</head>
+<body>
+
+<div class="topnav"><div class="wrap">
+  <a class="brand" href="requerimientos.html" style="text-decoration:none"><svg viewBox="0 0 24 24" fill="#14B8A6" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4V6a1 1 0 0 1 1-1zm9 2v2h2V7h-2zm0 4v2h2v-2h-2zm0 4v2h2v-2h-2z"/></svg>TurnoFácil</a>
+  <nav aria-label="Documentos">
+    <a href="requerimientos.html" aria-current="page">Requerimientos</a>
+    <a href="casos-de-uso.html">Casos de uso</a>
+    <a href="documentacion-pantallas.html">Pantallas</a>
+    <a href="arquitectura.html">Arquitectura</a>
+    <a href="base-de-datos.html">Base de datos</a>
+  </nav>
+</div></div>
+
+<header class="hero"><div class="wrap">
+  <h1>Requerimientos</h1>
+  <p>TurnoFácil organiza la atención por orden de llegada: el cliente saca un turno, la pantalla lo anuncia y el recepcionista lo atiende. Aquí está qué debe hacer el sistema y bajo qué condiciones.</p>
+  <div class="meta"><span>Grupo 2</span><span>Ingeniería de Software II · UNICARIBE</span><span>Entrega 1 · 08/10/2026</span></div>
+</div></header>
+
+<div class="layout">
+  <nav class="toc" aria-label="Contenido">
+    <h4>Contenido</h4>
+    <a href="#descripcion">Descripción</a>
+    <a href="#usuarios">Usuarios</a>
+    <a href="#rf">Funcionales</a>
+    <a href="#rnf">No funcionales</a>
+    <a href="#rn">Reglas de negocio</a>
+    <a href="#trazabilidad">Trazabilidad</a>
+    <a href="#minimos">Mínimos del proyecto</a>
+  </nav>
+
+  <main>
+    <section class="block" id="descripcion">
+      <h2>Descripción general</h2>
+      <p class="lead">Sistema de turnos para un centro de atención al cliente. Se adapta a una clínica, un banco o una oficina pública cambiando solo los servicios.</p>
+      <div class="cards">
+        <div class="card"><div class="icon">◎</div><h3>Objetivo</h3><p>Eliminar las filas físicas y registrar cuántos turnos se atienden y cuánto esperan los clientes.</p></div>
+        <div class="card"><div class="icon">✓</div><h3>Alcance</h3><p>Una sucursal con varias ventanillas, kiosco, pantalla pública y panel web para el personal.</p></div>
+        <div class="card"><div class="icon">✕</div><h3>Fuera de alcance</h3><p>Citas por adelantado, pagos, notificaciones por SMS o WhatsApp y múltiples sucursales.</p></div>
+      </div>
+    </section>
+
+    <section class="block" id="usuarios">
+      <h2>Usuarios del sistema</h2>
+      <p class="lead">Tres tipos de usuario. Solo el personal inicia sesión.</p>
+      <div class="cards">
+        <div class="card"><div class="icon">C</div><h3>Cliente</h3><p>Saca su turno en el kiosco y mira la pantalla pública. No necesita login.</p></div>
+        <div class="card"><div class="icon">R</div><h3>Recepcionista</h3><p>Atiende en una ventanilla: llama turnos y los marca como atendidos.</p></div>
+        <div class="card"><div class="icon">A</div><h3>Administrador</h3><p>Gestiona servicios, ventanillas y usuarios, y consulta los reportes.</p></div>
+      </div>
+    </section>
+
+    <section class="block" id="rf">
+      <h2>Requerimientos funcionales</h2>
+      <p class="lead">Ocho funciones; las seis primeras son de prioridad alta y forman el MVP.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>ID</th><th>Requerimiento</th><th>Usuario</th><th>Prioridad</th></tr></thead>
+        <tbody>
+          <tr><td class="id">RF-01</td><td><b>Iniciar sesión</b> con usuario y contraseña; el menú se adapta al rol.</td><td>Recepcionista, Admin</td><td><i class="tag hi">Alta</i></td></tr>
+          <tr><td class="id">RF-02</td><td><b>Registrar servicios</b>: crear, editar y activar o desactivar servicios con nombre y prefijo (Caja → «C»).</td><td>Admin</td><td><i class="tag hi">Alta</i></td></tr>
+          <tr><td class="id">RF-03</td><td><b>Generar turno</b>: el cliente elige un servicio y recibe el siguiente consecutivo del día (C-001, C-002…).</td><td>Cliente</td><td><i class="tag hi">Alta</i></td></tr>
+          <tr><td class="id">RF-04</td><td><b>Mostrar turno actual</b>: la pantalla pública muestra el turno llamado, su ventanilla y los últimos llamados.</td><td>Cliente</td><td><i class="tag hi">Alta</i></td></tr>
+          <tr><td class="id">RF-05</td><td><b>Llamar siguiente turno</b>: llama el turno en espera más antiguo de los servicios de su ventanilla.</td><td>Recepcionista</td><td><i class="tag hi">Alta</i></td></tr>
+          <tr><td class="id">RF-06</td><td><b>Marcar atendido</b>: cierra el turno como Atendido o No se presentó y guarda la hora.</td><td>Recepcionista</td><td><i class="tag hi">Alta</i></td></tr>
+          <tr><td class="id">RF-07</td><td><b>Consultar turnos</b>: listado por fecha, servicio y estado, con totales y espera promedio.</td><td>Admin, Recepcionista</td><td><i class="tag rn">Media</i></td></tr>
+          <tr><td class="id">RF-08</td><td><b>Gestionar usuarios y ventanillas</b>: crear recepcionistas y asignarlos a una ventanilla con sus servicios.</td><td>Admin</td><td><i class="tag rn">Media</i></td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="block" id="rnf">
+      <h2>Requerimientos no funcionales</h2>
+      <p class="lead">Condiciones de calidad que el sistema debe cumplir, medibles en las pruebas.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>ID</th><th>Categoría</th><th>Requerimiento</th></tr></thead>
+        <tbody>
+          <tr><td class="id">RNF-01</td><td>Usabilidad</td><td>Sacar un turno en el kiosco toma máximo 2 toques.</td></tr>
+          <tr><td class="id">RNF-02</td><td>Rendimiento</td><td>La pantalla pública refleja un llamado en 3 segundos o menos.</td></tr>
+          <tr><td class="id">RNF-03</td><td>Seguridad</td><td>Contraseñas cifradas con bcrypt; cada rol solo accede a sus opciones.</td></tr>
+          <tr><td class="id">RNF-04</td><td>Compatibilidad</td><td>Chrome, Edge y Firefox actuales; pantallas desde tablet de 10" hasta TV.</td></tr>
+          <tr><td class="id">RNF-05</td><td>Disponibilidad</td><td>Opera en la red local de la sucursal durante el horario de atención.</td></tr>
+          <tr><td class="id">RNF-06</td><td>Mantenibilidad</td><td>Código separado en capas: presentación, lógica y datos.</td></tr>
+          <tr><td class="id">RNF-07</td><td>Accesibilidad</td><td>Contraste mínimo 4.5:1 y número de turno legible a 5 metros.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="block" id="rn">
+      <h2>Reglas de negocio</h2>
+      <p class="lead">Restricciones del negocio que el backend valida en cada operación.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>ID</th><th>Regla</th></tr></thead>
+        <tbody>
+          <tr><td class="id">RN-01</td><td>La numeración de turnos reinicia en 001 cada día y por servicio.</td></tr>
+          <tr><td class="id">RN-02</td><td>Los turnos se atienden en orden de llegada (FIFO) dentro de cada servicio.</td></tr>
+          <tr><td class="id">RN-03</td><td>Una ventanilla no puede llamar otro turno mientras tenga uno <i>Llamado</i> sin cerrar.</td></tr>
+          <tr><td class="id">RN-04</td><td>Un servicio desactivado no aparece en el kiosco, pero conserva su historial.</td></tr>
+          <tr><td class="id">RN-05</td><td>Estados: <code>EN_ESPERA → LLAMADO → ATENDIDO | NO_PRESENTADO</code>. <code>CANCELADO</code> solo lo asigna el administrador.</td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="block" id="trazabilidad">
+      <h2>Trazabilidad</h2>
+      <p class="lead">Cada requerimiento funcional tiene un caso de uso y al menos una pantalla.</p>
+      <div class="table-scroll"><table>
+        <thead><tr><th>Requerimiento</th><th>Caso de uso</th><th>Pantallas</th></tr></thead>
+        <tbody>
+          <tr><td class="id">RF-01</td><td><a href="casos-de-uso.html#cu01">CU-01</a></td><td><a href="documentacion-pantallas.html#p3">P3 Login</a></td></tr>
+          <tr><td class="id">RF-02</td><td><a href="casos-de-uso.html#cu02">CU-02</a></td><td><a href="documentacion-pantallas.html#p5">P5</a>, <a href="documentacion-pantallas.html#p5a">P5a</a></td></tr>
+          <tr><td class="id">RF-03</td><td><a href="casos-de-uso.html#cu03">CU-03</a></td><td><a href="documentacion-pantallas.html#p1">P1</a>, <a href="documentacion-pantallas.html#p1b">P1b</a></td></tr>
+          <tr><td class="id">RF-04</td><td><a href="casos-de-uso.html#cu04">CU-04</a></td><td><a href="documentacion-pantallas.html#p2">P2</a></td></tr>
+          <tr><td class="id">RF-05</td><td><a href="casos-de-uso.html#cu05">CU-05</a></td><td><a href="documentacion-pantallas.html#p4b">P4b</a>, <a href="documentacion-pantallas.html#p4">P4</a></td></tr>
+          <tr><td class="id">RF-06</td><td><a href="casos-de-uso.html#cu06">CU-06</a></td><td><a href="documentacion-pantallas.html#p4">P4</a></td></tr>
+          <tr><td class="id">RF-07</td><td><a href="casos-de-uso.html#cu07">CU-07</a></td><td><a href="documentacion-pantallas.html#p6">P6</a></td></tr>
+          <tr><td class="id">RF-08</td><td><a href="casos-de-uso.html#cu08">CU-08</a></td><td><a href="documentacion-pantallas.html#p5b">P5b</a>, <a href="documentacion-pantallas.html#p5c">P5c</a>, <a href="documentacion-pantallas.html#p5d">P5d</a></td></tr>
+        </tbody>
+      </table></div>
+    </section>
+
+    <section class="block" id="minimos">
+      <h2>Mínimos del proyecto</h2>
+      <p class="lead">El proyecto cumple o supera todas las cantidades pedidas.</p>
+      <div class="cards">
+        <div class="card"><div class="stat">8<small>funcionalidades (pedido: 5–7)</small></div></div>
+        <div class="card"><div class="stat">12<small>pantallas (pedido: 4–6)</small></div></div>
+        <div class="card"><div class="stat">5<small>tablas (pedido: 3–5)</small></div></div>
+        <div class="card"><div class="stat">3<small>tipos de usuario (pedido: 2–3)</small></div></div>
+      </div>
+    </section>
+  </main>
+</div>
+
+<footer>TurnoFácil · Grupo 2 · Ingeniería de Software II · UNICARIBE · 2026</footer>
+</body>
+</html>

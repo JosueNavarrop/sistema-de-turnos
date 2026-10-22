@@ -1,0 +1,661 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>TurnoFácil · Pantallas</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --primary:#1E5EFF; --primary-dark:#0B2A6F; --accent:#14B8A6;
+  --bg:#F5F7FB; --surface:#FFFFFF; --text:#1F2937; --muted:#6B7280; --border:#E5E7EB;
+  --tint:#1E5EFF14; --shadow:0 2px 8px rgba(0,0,0,.08);
+  --code-bg:#0B2A6F; --code-text:#E0E7FF;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1424; --surface:#161E33; --text:#E5E7EB; --muted:#9CA3AF; --border:#263049;
+    --tint:#1E5EFF26; --shadow:0 2px 8px rgba(0,0,0,.4); --code-bg:#0A1020;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1424; --surface:#161E33; --text:#E5E7EB; --muted:#9CA3AF; --border:#263049;
+  --tint:#1E5EFF26; --shadow:0 2px 8px rgba(0,0,0,.4); --code-bg:#0A1020;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,sans-serif}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;line-height:1.25;margin:0}
+a{color:var(--primary)}
+code{font-size:.9em;background:var(--tint);padding:1px 6px;border-radius:6px}
+
+/* Barra superior entre documentos */
+.topnav{background:var(--primary-dark);border-bottom:1px solid #FFFFFF1F}
+.topnav .wrap{max-width:1200px;margin:0 auto;padding:0 24px;display:flex;align-items:center;gap:28px;overflow-x:auto}
+.topnav .brand{padding:14px 0;font-size:17px}
+.topnav nav{display:flex;gap:4px}
+.topnav nav a{color:#C7D2FE;text-decoration:none;font-size:14px;font-weight:500;padding:16px 12px;white-space:nowrap;border-bottom:3px solid transparent}
+.topnav nav a:hover{color:#fff}
+.topnav nav a[aria-current="page"]{color:#fff;border-bottom-color:var(--accent)}
+
+/* Encabezado */
+.hero{background:var(--primary-dark);color:#fff;padding:48px 24px 48px}
+.hero .wrap{max-width:1200px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-family:Poppins;font-weight:600;font-size:20px;color:#fff}
+.brand svg{width:26px;height:26px;flex:none}
+.hero h1{font-size:clamp(30px,5vw,44px);margin:0 0 12px}
+.hero p{color:#C7D2FE;max-width:760px;margin:0;font-size:18px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.meta span{background:#FFFFFF1A;border:1px solid #FFFFFF26;padding:4px 12px;border-radius:999px;font-size:13px}
+
+/* Estructura */
+.layout{max-width:1200px;margin:0 auto;padding:40px 24px 80px;display:grid;grid-template-columns:220px 1fr;gap:48px}
+nav.toc{position:sticky;top:24px;align-self:start;font-size:14px}
+nav.toc h4{font:600 12px Inter;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:24px 0 8px}
+nav.toc h4:first-child{margin-top:0}
+nav.toc a{display:block;padding:5px 10px;border-radius:8px;color:var(--text);text-decoration:none}
+nav.toc a:hover{background:var(--tint);color:var(--primary)}
+main{min-width:0}
+section.block{margin-bottom:64px;scroll-margin-top:24px}
+section.block>h2{font-size:28px;margin-bottom:8px}
+section.block h3{font-size:19px;margin:28px 0 12px}
+.lead{color:var(--muted);margin:0 0 24px;max-width:780px}
+
+/* Tablas */
+.table-scroll{overflow-x:auto;border-radius:12px}
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:15px}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--bg);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600;white-space:nowrap}
+tr:last-child td{border-bottom:0}
+td.id{font-family:Poppins;font-weight:600;color:var(--primary);white-space:nowrap}
+
+/* Tarjetas */
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+.card h3{font-size:17px;margin:0 0 6px}
+.card p{margin:0;color:var(--muted);font-size:15px}
+.card .icon{width:40px;height:40px;border-radius:12px;background:var(--tint);color:var(--primary);display:flex;align-items:center;justify-content:center;font:700 18px Poppins;margin-bottom:12px}
+.stat{font:700 36px Poppins;color:var(--primary);line-height:1}
+.stat small{display:block;font:500 14px Inter;color:var(--muted);margin-top:6px}
+
+/* Etiquetas */
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-style:normal;font-size:13px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--border);white-space:nowrap}
+.tag.cu{color:var(--primary);background:var(--tint);border-color:transparent}
+.tag.rn{color:#B45309;background:#F59E0B1F;border-color:transparent}
+.tag.hi{color:#B91C1C;background:#DC26261A;border-color:transparent}
+.tag.ok{color:#15803D;background:#16A34A1F;border-color:transparent}
+
+/* Diagramas */
+.diagram{background:#fff;border:1px solid var(--border);border-radius:16px;padding:24px;overflow-x:auto;color:#1F2937}
+.diagram .mermaid{display:flex;justify-content:center;min-width:560px;background:transparent;color:#1F2937;padding:0;border-radius:0;font-family:Inter,sans-serif}
+.diagram .mermaid .edgeLabel,.diagram .mermaid .edgeLabel rect,.diagram .mermaid .labelBkg{background:#fff!important;fill:#fff!important}
+.caption{font-size:14px;color:var(--muted);margin:10px 0 0}
+
+/* Código */
+pre{background:var(--code-bg);color:var(--code-text);border-radius:14px;padding:20px;overflow-x:auto;font:13.5px/1.6 ui-monospace,SFMono-Regular,Menlo,monospace;margin:0}
+pre code{background:none;padding:0;font-size:inherit;color:inherit}
+details{background:var(--surface);border:1px solid var(--border);border-radius:14px;margin-bottom:12px}
+details>summary{cursor:pointer;padding:14px 18px;font-weight:600;list-style:none;display:flex;align-items:center;gap:10px}
+details>summary::before{content:"▸";color:var(--primary);transition:transform .15s}
+details[open]>summary::before{transform:rotate(90deg)}
+details>.inner{padding:0 18px 18px}
+
+footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;gap:24px;padding:24px 16px 64px}
+  nav.toc{display:none}
+  .hero{padding:36px 16px}
+  .topnav .wrap{padding:0 16px;gap:16px}
+}
+</style>
+<style>
+:root{
+  --primary:#1E5EFF; --primary-dark:#0B2A6F; --accent:#14B8A6;
+  --bg:#F5F7FB; --surface:#FFFFFF; --text:#1F2937; --muted:#6B7280; --border:#E5E7EB;
+  --wait:#F59E0B; --called:#1E5EFF; --done:#16A34A; --noshow:#DC2626; --cancel:#6B7280;
+  --tint:#1E5EFF14; --shadow:0 2px 8px rgba(0,0,0,.08);
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0E1424; --surface:#161E33; --text:#E5E7EB; --muted:#9CA3AF; --border:#263049;
+    --tint:#1E5EFF26; --shadow:0 2px 8px rgba(0,0,0,.4);
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0E1424; --surface:#161E33; --text:#E5E7EB; --muted:#9CA3AF; --border:#263049;
+  --tint:#1E5EFF26; --shadow:0 2px 8px rgba(0,0,0,.4);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--bg);color:var(--text);font:16px/1.6 Inter,system-ui,sans-serif}
+h1,h2,h3{font-family:Poppins,Inter,sans-serif;line-height:1.25;margin:0}
+a{color:var(--primary)}
+code{font-size:.9em;background:var(--tint);padding:1px 6px;border-radius:6px}
+
+/* Header */
+.hero{background:var(--primary-dark);color:#fff;padding:56px 24px 48px}
+.hero .wrap{max-width:1200px;margin:0 auto}
+.brand{display:flex;align-items:center;gap:10px;font-family:Poppins;font-weight:600;font-size:20px}
+.brand svg{width:28px;height:28px}
+.hero h1{font-size:clamp(30px,5vw,44px);margin:24px 0 12px}
+.hero p{color:#C7D2FE;max-width:720px;margin:0;font-size:18px}
+.meta{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}
+.meta span{background:#FFFFFF1A;border:1px solid #FFFFFF26;padding:4px 12px;border-radius:999px;font-size:13px}
+
+/* Layout */
+.layout{max-width:1200px;margin:0 auto;padding:40px 24px 80px;display:grid;grid-template-columns:240px 1fr;gap:48px}
+nav.toc{position:sticky;top:24px;align-self:start;font-size:14px}
+nav.toc h4{font:600 12px Inter;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin:24px 0 8px}
+nav.toc h4:first-child{margin-top:0}
+nav.toc a{display:block;padding:5px 10px;border-radius:8px;color:var(--text);text-decoration:none}
+nav.toc a:hover{background:var(--tint);color:var(--primary)}
+main{min-width:0}
+section.block{margin-bottom:64px}
+section.block>h2{font-size:28px;margin-bottom:8px}
+.lead{color:var(--muted);margin:0 0 24px;max-width:760px}
+
+/* Tables & cards */
+table{width:100%;border-collapse:collapse;background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:15px}
+th,td{text-align:left;padding:12px 16px;border-bottom:1px solid var(--border);vertical-align:top}
+th{background:var(--bg);font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600}
+tr:last-child td{border-bottom:0}
+.table-scroll{overflow-x:auto}
+
+/* Flow */
+.flow{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.lane{background:var(--surface);border:1px solid var(--border);border-radius:16px;padding:20px}
+.lane h3{font-size:16px;margin-bottom:4px}
+.lane .who{font-size:13px;color:var(--muted);margin-bottom:14px}
+.steps{display:flex;flex-direction:column;gap:8px}
+.step{display:flex;align-items:center;gap:10px;padding:8px 12px;border-radius:10px;background:var(--bg);font-size:14px;text-decoration:none;color:var(--text)}
+.step:hover{outline:2px solid var(--primary)}
+.step b{font-family:Poppins;color:var(--primary);min-width:34px}
+.arrow{color:var(--muted);font-size:13px;padding-left:14px}
+
+/* Screens */
+.screen{background:var(--surface);border:1px solid var(--border);border-radius:20px;overflow:hidden;margin-bottom:32px;box-shadow:var(--shadow);scroll-margin-top:24px}
+.screen figure{margin:0;background:var(--bg);border-bottom:1px solid var(--border);cursor:zoom-in}
+.screen img{display:block;width:100%;height:auto}
+.screen .body{padding:28px;display:grid;grid-template-columns:1fr 300px;gap:32px}
+.screen h3{font-size:22px;display:flex;align-items:center;gap:12px;flex-wrap:wrap}
+.code{font:700 14px Poppins;color:var(--primary);background:var(--tint);padding:4px 10px;border-radius:8px}
+.screen p{margin:10px 0 16px;color:var(--muted)}
+.screen ul{margin:0;padding-left:20px}
+.screen li{margin-bottom:6px}
+.facts{display:flex;flex-direction:column;gap:14px;font-size:14px}
+.facts div span{display:block;font-size:12px;letter-spacing:.04em;text-transform:uppercase;color:var(--muted);font-weight:600;margin-bottom:4px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-style:normal;font-size:13px;font-weight:600;padding:3px 10px;border-radius:999px;background:var(--bg);border:1px solid var(--border)}
+.tag.cu{color:var(--primary);background:var(--tint);border-color:transparent}
+.tag.rn{color:#B45309;background:#F59E0B1F;border-color:transparent}
+
+/* Tokens */
+.swatches{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:12px}
+.sw{background:var(--surface);border:1px solid var(--border);border-radius:12px;overflow:hidden;font-size:13px}
+.sw i{display:block;height:56px}
+.sw div{padding:10px 12px}
+.sw b{display:block;font-weight:600}
+.sw code{background:none;padding:0;color:var(--muted)}
+.states{display:flex;flex-wrap:wrap;gap:10px;margin-top:16px}
+.pill{display:inline-flex;align-items:center;gap:6px;padding:4px 12px;border-radius:999px;font-size:13px;font-weight:600}
+.pill::before{content:"";width:8px;height:8px;border-radius:50%;background:currentColor}
+
+/* Lightbox */
+.lightbox{position:fixed;inset:0;background:#0B2A6FE6;display:none;align-items:center;justify-content:center;padding:24px;z-index:10;cursor:zoom-out}
+.lightbox.open{display:flex}
+.lightbox img{max-width:100%;max-height:100%;border-radius:12px;box-shadow:0 16px 48px rgba(0,0,0,.4)}
+
+footer{text-align:center;color:var(--muted);font-size:13px;padding:0 16px 40px}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr;gap:24px;padding:24px 16px 64px}
+  nav.toc{position:static;display:none}
+  .flow{grid-template-columns:1fr}
+  .screen .body{grid-template-columns:1fr;padding:20px}
+  .hero{padding:40px 16px}
+}
+
+/* Impresión / PDF */
+@media print{
+  @page{size:A4;margin:12mm}
+  :root{--bg:#F5F7FB;--surface:#FFFFFF;--text:#1F2937;--muted:#6B7280;--border:#E5E7EB;--tint:#1E5EFF14}
+  html,body{background:#fff;font-size:13px;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .topnav,nav.toc,.lightbox,.no-print{display:none!important}
+  .hero{padding:28px 28px;border-radius:12px}
+  .hero h1{font-size:30px}
+  .hero p{font-size:14px}
+  .layout{display:block;padding:20px 0 0;max-width:none}
+  section.block{margin-bottom:28px}
+  section.block>h2{font-size:22px}
+  .lead{margin-bottom:14px}
+  table{font-size:12px}
+  th,td{padding:7px 10px}
+  tr,.lane,.sw{break-inside:avoid}
+  .flow{grid-template-columns:repeat(3,1fr)}
+  a{color:inherit;text-decoration:none}
+  .screen{break-before:page;break-inside:avoid;box-shadow:none;margin-bottom:0}
+  #pantallas{break-before:page}
+  #pantallas .screen:first-of-type{break-before:avoid;margin-top:8px}
+  .screen figure{cursor:default}
+  .screen .body{grid-template-columns:1fr 210px;gap:20px;padding:18px 20px}
+  .screen h3{font-size:18px}
+  .screen p{margin:6px 0 10px}
+  .facts{gap:10px;font-size:12px}
+  footer{padding-top:16px}
+}
+</style>
+</head>
+<body>
+
+<div class="topnav"><div class="wrap">
+  <a class="brand" href="requerimientos.html" style="text-decoration:none"><svg viewBox="0 0 24 24" fill="#14B8A6" aria-hidden="true"><path d="M4 5h16a1 1 0 0 1 1 1v3a2 2 0 0 0 0 4v3a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1v-3a2 2 0 0 0 0-4V6a1 1 0 0 1 1-1zm9 2v2h2V7h-2zm0 4v2h2v-2h-2zm0 4v2h2v-2h-2z"/></svg>TurnoFácil</a>
+  <nav aria-label="Documentos">
+    <a href="requerimientos.html">Requerimientos</a>
+    <a href="casos-de-uso.html">Casos de uso</a>
+    <a href="documentacion-pantallas.html" aria-current="page">Pantallas</a>
+    <a href="arquitectura.html">Arquitectura</a>
+    <a href="base-de-datos.html">Base de datos</a>
+  </nav>
+</div></div>
+
+<header class="hero">
+  <div class="wrap">
+    <h1 style="margin-top:0">Documentación de pantallas</h1>
+    <p>12 pantallas que cubren los 8 casos de uso del Sistema de Turnos: el kiosco del cliente, la pantalla pública, el panel del recepcionista y la administración.</p>
+    <div class="meta">
+      <span>Grupo 2</span><span>Ingeniería de Software II · UNICARIBE</span><span>Entrega 1 · 08/10/2026</span><span>Vue 3 + FastAPI + MySQL</span>
+    </div>
+  </div>
+</header>
+
+<div class="layout">
+  <nav class="toc" aria-label="Contenido">
+    <h4>General</h4>
+    <a href="#resumen">Resumen</a>
+    <a href="#flujo">Mapa de navegación</a>
+    <a href="#linea">Línea gráfica</a>
+    <h4>Cliente</h4>
+    <a href="#p1">P1 · Kiosco</a>
+    <a href="#p1b">P1b · Turno generado</a>
+    <a href="#p2">P2 · Pantalla pública</a>
+    <h4>Personal</h4>
+    <a href="#p3">P3 · Login</a>
+    <a href="#p4">P4 · Recepción, atendiendo</a>
+    <a href="#p4b">P4b · Recepción, sin turno</a>
+    <a href="#p6">P6 · Consultar turnos</a>
+    <h4>Administración</h4>
+    <a href="#p5">P5 · Servicios</a>
+    <a href="#p5a">P5a · Nuevo servicio</a>
+    <a href="#p5b">P5b · Ventanillas</a>
+    <a href="#p5c">P5c · Usuarios</a>
+    <a href="#p5d">P5d · Nuevo usuario</a>
+  </nav>
+
+  <main>
+    <section class="block" id="resumen">
+      <h2>Resumen</h2>
+      <p class="lead">Cada pantalla responde a un caso de uso y a un solo objetivo. La tabla muestra quién la usa y qué requerimiento cubre.</p>
+      <div class="table-scroll">
+      <table>
+        <thead><tr><th>Pantalla</th><th>Usuario</th><th>Caso de uso</th><th>Requerimiento</th><th>Dispositivo</th></tr></thead>
+        <tbody>
+          <tr><td><a href="#p1">P1 · Kiosco — Generar turno</a></td><td>Cliente</td><td>CU-03</td><td>RF-03</td><td>Tablet 1280×800</td></tr>
+          <tr><td><a href="#p1b">P1b · Kiosco — Turno generado</a></td><td>Cliente</td><td>CU-03</td><td>RF-03</td><td>Tablet 1280×800</td></tr>
+          <tr><td><a href="#p2">P2 · Pantalla pública</a></td><td>Cliente</td><td>CU-04</td><td>RF-04</td><td>TV 1920×1080</td></tr>
+          <tr><td><a href="#p3">P3 · Login</a></td><td>Recepcionista, Admin</td><td>CU-01</td><td>RF-01</td><td>Escritorio 1440×900</td></tr>
+          <tr><td><a href="#p4">P4 · Recepción — Atendiendo</a></td><td>Recepcionista</td><td>CU-05, CU-06</td><td>RF-05, RF-06</td><td>Escritorio 1440×900</td></tr>
+          <tr><td><a href="#p4b">P4b · Recepción — Sin turno</a></td><td>Recepcionista</td><td>CU-05</td><td>RF-05</td><td>Escritorio 1440×900</td></tr>
+          <tr><td><a href="#p5">P5 · Admin — Servicios</a></td><td>Administrador</td><td>CU-02</td><td>RF-02</td><td>Escritorio 1440×900</td></tr>
+          <tr><td><a href="#p5a">P5a · Nuevo servicio</a></td><td>Administrador</td><td>CU-02</td><td>RF-02</td><td>Escritorio 1440×900</td></tr>
+          <tr><td><a href="#p5b">P5b · Admin — Ventanillas</a></td><td>Administrador</td><td>CU-08</td><td>RF-08</td><td>Escritorio 1440×900</td></tr>
+          <tr><td><a href="#p5c">P5c · Admin — Usuarios</a></td><td>Administrador</td><td>CU-08</td><td>RF-08</td><td>Escritorio 1440×900</td></tr>
+          <tr><td><a href="#p5d">P5d · Nuevo usuario</a></td><td>Administrador</td><td>CU-08</td><td>RF-08</td><td>Escritorio 1440×900</td></tr>
+          <tr><td><a href="#p6">P6 · Consultar turnos</a></td><td>Admin, Recepcionista</td><td>CU-07</td><td>RF-07</td><td>Escritorio 1440×900</td></tr>
+        </tbody>
+      </table>
+      </div>
+    </section>
+
+    <section class="block" id="flujo">
+      <h2>Mapa de navegación</h2>
+      <p class="lead">El cliente nunca inicia sesión. El personal entra por el login y el rol decide a qué panel llega.</p>
+      <div class="flow">
+        <div class="lane">
+          <h3>Cliente</h3><div class="who">Kiosco y TV, sin login</div>
+          <div class="steps">
+            <a class="step" href="#p1"><b>P1</b>Elige un servicio</a>
+            <div class="arrow">↓ toca una tarjeta</div>
+            <a class="step" href="#p1b"><b>P1b</b>Recibe su turno</a>
+            <div class="arrow">↓ espera su llamado</div>
+            <a class="step" href="#p2"><b>P2</b>Ve el turno en la TV</a>
+          </div>
+        </div>
+        <div class="lane">
+          <h3>Recepcionista</h3><div class="who">Desde su ventanilla</div>
+          <div class="steps">
+            <a class="step" href="#p3"><b>P3</b>Inicia sesión</a>
+            <div class="arrow">↓</div>
+            <a class="step" href="#p4b"><b>P4b</b>Llama al siguiente</a>
+            <div class="arrow">↓ el turno sale en P2</div>
+            <a class="step" href="#p4"><b>P4</b>Atiende y cierra</a>
+            <div class="arrow">↺ vuelve a P4b · o consulta</div>
+            <a class="step" href="#p6"><b>P6</b>Consulta turnos</a>
+          </div>
+        </div>
+        <div class="lane">
+          <h3>Administrador</h3><div class="who">Configuración y reportes</div>
+          <div class="steps">
+            <a class="step" href="#p3"><b>P3</b>Inicia sesión</a>
+            <div class="arrow">↓</div>
+            <a class="step" href="#p5"><b>P5</b>Servicios <span style="color:var(--muted)">→ P5a</span></a>
+            <a class="step" href="#p5b"><b>P5b</b>Ventanillas</a>
+            <a class="step" href="#p5c"><b>P5c</b>Usuarios <span style="color:var(--muted)">→ P5d</span></a>
+            <a class="step" href="#p6"><b>P6</b>Consulta turnos</a>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="block" id="linea">
+      <h2>Línea gráfica</h2>
+      <p class="lead">Todas las pantallas usan las mismas variables de color y tipografía. Títulos en Poppins y texto en Inter; bordes de 12 px y espaciado en múltiplos de 8.</p>
+      <div class="swatches">
+        <div class="sw"><i style="background:#1E5EFF"></i><div><b>Azul confianza</b><code>#1E5EFF</code></div></div>
+        <div class="sw"><i style="background:#0B2A6F"></i><div><b>Azul noche</b><code>#0B2A6F</code></div></div>
+        <div class="sw"><i style="background:#14B8A6"></i><div><b>Turquesa</b><code>#14B8A6</code></div></div>
+        <div class="sw"><i style="background:#F5F7FB"></i><div><b>Gris nube</b><code>#F5F7FB</code></div></div>
+        <div class="sw"><i style="background:#1F2937"></i><div><b>Grafito</b><code>#1F2937</code></div></div>
+        <div class="sw"><i style="background:#6B7280"></i><div><b>Gris</b><code>#6B7280</code></div></div>
+      </div>
+      <div class="states" aria-label="Estados del turno">
+        <span class="pill" style="color:#B45309;background:#F59E0B1F">En espera</span>
+        <span class="pill" style="color:#1E5EFF;background:#1E5EFF1F">Llamado</span>
+        <span class="pill" style="color:#16A34A;background:#16A34A1F">Atendido</span>
+        <span class="pill" style="color:#DC2626;background:#DC26261F">No se presentó</span>
+        <span class="pill" style="color:#6B7280;background:#6B72801F">Cancelado</span>
+      </div>
+    </section>
+
+    <section class="block" id="pantallas">
+      <h2>Pantallas</h2>
+      <p class="lead no-print">Haga clic en cualquier imagen para verla en grande.</p>
+
+      <article class="screen" id="p1">
+        <figure><img src="images/p1-kiosco-generar-turno.png" alt="Kiosco con tres tarjetas de servicio: Caja, Servicio al cliente y Créditos" loading="lazy"></figure>
+        <div class="body">
+          <div>
+            <h3><span class="code">P1</span>Kiosco — Generar turno</h3>
+            <p>El cliente elige un servicio con un solo toque y el sistema le asigna el siguiente número del día.</p>
+            <ul>
+              <li>Barra azul noche con el logo, la hora y la fecha.</li>
+              <li>Tarjetas grandes con el prefijo del servicio (C, S, R), su nombre y una descripción corta.</li>
+              <li>Solo aparecen los servicios activos.</li>
+              <li>Texto de ayuda que explica qué pasa después.</li>
+            </ul>
+          </div>
+          <div class="facts">
+            <div><span>Usuario</span>Cliente</div>
+            <div><span>Trazabilidad</span><div class="tags"><i class="tag cu">CU-03</i><i class="tag">RF-03</i><i class="tag">RNF-01</i></div></div>
+            <div><span>Reglas</span><div class="tags"><i class="tag rn">RN-01</i><i class="tag rn">RN-04</i></div></div>
+            <div><span>Vista Vue</span><code>/kiosco</code></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="screen" id="p1b">
+        <figure><img src="images/p1b-kiosco-turno-generado.png" alt="Ticket con el turno C-015, 4 personas delante y 12 minutos de espera estimada" loading="lazy"></figure>
+        <div class="body">
+          <div>
+            <h3><span class="code">P1b</span>Kiosco — Turno generado</h3>
+            <p>Confirma el turno creado y le dice al cliente cuánto le falta.</p>
+            <ul>
+              <li>Mensaje de éxito en turquesa.</li>
+              <li>Código del turno en grande (C-015) y el servicio elegido.</li>
+              <li>Personas delante y espera estimada.</li>
+              <li>Vuelve sola a P1 a los 5 segundos.</li>
+            </ul>
+          </div>
+          <div class="facts">
+            <div><span>Usuario</span>Cliente</div>
+            <div><span>Trazabilidad</span><div class="tags"><i class="tag cu">CU-03</i><i class="tag">RF-03</i></div></div>
+            <div><span>Estado del turno</span>EN_ESPERA</div>
+            <div><span>API</span><code>POST /api/turnos</code></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="screen" id="p2">
+        <figure><img src="images/p2-pantalla-p-blica-turno-actual.png" alt="Pantalla de TV con el turno actual C-015 en Ventanilla 1 y la lista de últimos llamados" loading="lazy"></figure>
+        <div class="body">
+          <div>
+            <h3><span class="code">P2</span>Pantalla pública — Turno actual</h3>
+            <p>Muestra en la TV de la sala qué turno se está llamando y a qué ventanilla debe ir el cliente.</p>
+            <ul>
+              <li>Turno actual en 240 px, legible a 5 metros, con borde turquesa.</li>
+              <li>Ventanilla destacada en una píldora turquesa.</li>
+              <li>Los últimos 5 turnos llamados a la derecha.</li>
+              <li>Aviso permanente sobre los turnos no presentados.</li>
+              <li>Se actualiza cada 3 segundos; un turno nuevo parpadea y suena un tono.</li>
+            </ul>
+          </div>
+          <div class="facts">
+            <div><span>Usuario</span>Cliente</div>
+            <div><span>Trazabilidad</span><div class="tags"><i class="tag cu">CU-04</i><i class="tag">RF-04</i><i class="tag">RNF-02</i><i class="tag">RNF-07</i></div></div>
+            <div><span>Vista Vue</span><code>/pantalla</code></div>
+            <div><span>API</span><code>GET /api/turnos/actual</code></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="screen" id="p3">
+        <figure><img src="images/p3-login.png" alt="Pantalla de inicio de sesión con panel de marca a la izquierda y formulario a la derecha" loading="lazy"></figure>
+        <div class="body">
+          <div>
+            <h3><span class="code">P3</span>Login</h3>
+            <p>Entrada del personal. Según el rol, lleva al panel de recepción o a la administración.</p>
+            <ul>
+              <li>Panel de marca con el propósito del sistema.</li>
+              <li>Campos de usuario y contraseña.</li>
+              <li>Mensaje de error visible: «Usuario o contraseña inválidos».</li>
+            </ul>
+          </div>
+          <div class="facts">
+            <div><span>Usuario</span>Recepcionista, Administrador</div>
+            <div><span>Trazabilidad</span><div class="tags"><i class="tag cu">CU-01</i><i class="tag">RF-01</i><i class="tag">RNF-03</i></div></div>
+            <div><span>Flujo alterno</span>3a · credenciales inválidas</div>
+            <div><span>API</span><code>POST /api/auth/login</code></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="screen" id="p4">
+        <figure><img src="images/p4-panel-del-recepcionista.png" alt="Panel del recepcionista atendiendo el turno C-015 con botones Atendido, No se presentó y Volver a llamar" loading="lazy"></figure>
+        <div class="body">
+          <div>
+            <h3><span class="code">P4</span>Panel del recepcionista — Atendiendo</h3>
+            <p>El recepcionista atiende un turno y lo cierra con una de tres acciones.</p>
+            <ul>
+              <li>Turno en atención en grande, con la hora del llamado y el tiempo de espera.</li>
+              <li>Acciones: Atendido (verde), No se presentó (rojo) y Volver a llamar.</li>
+              <li>«Llamar siguiente» aparece deshabilitado mientras haya un turno abierto.</li>
+              <li>Cola por servicio y resumen del día.</li>
+            </ul>
+          </div>
+          <div class="facts">
+            <div><span>Usuario</span>Recepcionista</div>
+            <div><span>Trazabilidad</span><div class="tags"><i class="tag cu">CU-05</i><i class="tag cu">CU-06</i><i class="tag">RF-05</i><i class="tag">RF-06</i></div></div>
+            <div><span>Reglas</span><div class="tags"><i class="tag rn">RN-03</i><i class="tag rn">RN-05</i></div></div>
+            <div><span>API</span><code>PUT /api/turnos/{id}/estado</code></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="screen" id="p4b">
+        <figure><img src="images/p4b-panel-del-recepcionista-sin-turno-abierto.png" alt="Panel del recepcionista sin turno abierto y el botón Llamar siguiente activo" loading="lazy"></figure>
+        <div class="body">
+          <div>
+            <h3><span class="code">P4b</span>Panel del recepcionista — Sin turno abierto</h3>
+            <p>La ventanilla está libre. La acción principal es llamar al siguiente cliente.</p>
+            <ul>
+              <li>Mensaje vacío: «No está atendiendo a nadie», con los clientes en espera.</li>
+              <li>Último turno atendido como referencia.</li>
+              <li>«Llamar siguiente» activo: llama al turno más antiguo de los servicios de la ventanilla.</li>
+            </ul>
+          </div>
+          <div class="facts">
+            <div><span>Usuario</span>Recepcionista</div>
+            <div><span>Trazabilidad</span><div class="tags"><i class="tag cu">CU-05</i><i class="tag">RF-05</i></div></div>
+            <div><span>Reglas</span><div class="tags"><i class="tag rn">RN-02</i></div></div>
+            <div><span>API</span><code>POST /api/turnos/siguiente</code></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="screen" id="p5">
+        <figure><img src="images/p5-administraci-n-servicios.png" alt="Administración de servicios con tabla de prefijo, nombre, descripción, ventanillas, turnos y estado" loading="lazy"></figure>
+        <div class="body">
+          <div>
+            <h3><span class="code">P5</span>Administración — Servicios</h3>
+            <p>El administrador ve y configura los servicios que aparecen en el kiosco.</p>
+            <ul>
+              <li>Pestañas Servicios, Ventanillas y Usuarios.</li>
+              <li>Tabla con prefijo, nombre, descripción, ventanillas, turnos de hoy y estado.</li>
+              <li>Acciones de editar y activar o desactivar en cada fila.</li>
+            </ul>
+          </div>
+          <div class="facts">
+            <div><span>Usuario</span>Administrador</div>
+            <div><span>Trazabilidad</span><div class="tags"><i class="tag cu">CU-02</i><i class="tag">RF-02</i></div></div>
+            <div><span>Reglas</span><div class="tags"><i class="tag rn">RN-04</i></div></div>
+            <div><span>Vista Vue</span><code>/admin</code></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="screen" id="p5a">
+        <figure><img src="images/p5a-administraci-n-nuevo-servicio-modal.png" alt="Ventana para crear un servicio con error de prefijo duplicado" loading="lazy"></figure>
+        <div class="body">
+          <div>
+            <h3><span class="code">P5a</span>Nuevo servicio</h3>
+            <p>Ventana para crear un servicio. Muestra la validación del prefijo duplicado.</p>
+            <ul>
+              <li>Campos: nombre, prefijo, descripción e interruptor de Activo.</li>
+              <li>Error en rojo cuando el prefijo ya lo usa otro servicio.</li>
+              <li>Vista previa de cómo se verán los turnos.</li>
+            </ul>
+          </div>
+          <div class="facts">
+            <div><span>Usuario</span>Administrador</div>
+            <div><span>Trazabilidad</span><div class="tags"><i class="tag cu">CU-02</i><i class="tag">RF-02</i></div></div>
+            <div><span>Flujo alterno</span>5a · prefijo duplicado</div>
+            <div><span>API</span><code>POST /api/servicios</code></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="screen" id="p5b">
+        <figure><img src="images/p5b-administraci-n-ventanillas.png" alt="Tabla de ventanillas con servicios que atiende, recepcionista, turno actual y estado" loading="lazy"></figure>
+        <div class="body">
+          <div>
+            <h3><span class="code">P5b</span>Administración — Ventanillas</h3>
+            <p>Define qué servicios atiende cada ventanilla y quién está en ella.</p>
+            <ul>
+              <li>Servicios como etiquetas: una ventanilla puede atender varios.</li>
+              <li>Recepcionista asignado y turno que está atendiendo.</li>
+              <li>Estado activo o inactivo de la ventanilla.</li>
+            </ul>
+          </div>
+          <div class="facts">
+            <div><span>Usuario</span>Administrador</div>
+            <div><span>Trazabilidad</span><div class="tags"><i class="tag cu">CU-08</i><i class="tag">RF-08</i></div></div>
+            <div><span>Tabla BD</span><code>ventanilla_servicio</code></div>
+            <div><span>API</span><code>/api/ventanillas</code></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="screen" id="p5c">
+        <figure><img src="images/p5c-administraci-n-usuarios.png" alt="Tabla de usuarios con rol, ventanilla, último acceso y estado" loading="lazy"></figure>
+        <div class="body">
+          <div>
+            <h3><span class="code">P5c</span>Administración — Usuarios</h3>
+            <p>Lista del personal con su rol y su ventanilla.</p>
+            <ul>
+              <li>Avatar, nombre y usuario de acceso.</li>
+              <li>Rol diferenciado por color: Administrador o Recepcionista.</li>
+              <li>Ventanilla asignada, último acceso y estado.</li>
+            </ul>
+          </div>
+          <div class="facts">
+            <div><span>Usuario</span>Administrador</div>
+            <div><span>Trazabilidad</span><div class="tags"><i class="tag cu">CU-08</i><i class="tag">RF-08</i></div></div>
+            <div><span>Tabla BD</span><code>usuarios</code></div>
+            <div><span>API</span><code>/api/usuarios</code></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="screen" id="p5d">
+        <figure><img src="images/p5d-administraci-n-nuevo-usuario-modal.png" alt="Ventana para crear un usuario con nombre, usuario, contraseña, rol y ventanilla" loading="lazy"></figure>
+        <div class="body">
+          <div>
+            <h3><span class="code">P5d</span>Nuevo usuario</h3>
+            <p>Ventana para crear el acceso de un recepcionista y asignarle ventanilla.</p>
+            <ul>
+              <li>Nombre completo, usuario y contraseña.</li>
+              <li>Rol como dos opciones con su descripción.</li>
+              <li>Ventanilla asignada con los servicios que atiende.</li>
+            </ul>
+          </div>
+          <div class="facts">
+            <div><span>Usuario</span>Administrador</div>
+            <div><span>Trazabilidad</span><div class="tags"><i class="tag cu">CU-08</i><i class="tag">RF-08</i><i class="tag">RNF-03</i></div></div>
+            <div><span>Flujo alterno</span>2a · usuario duplicado</div>
+            <div><span>API</span><code>POST /api/usuarios</code></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="screen" id="p6">
+        <figure><img src="images/p6-consultar-turnos.png" alt="Consulta de turnos con filtros, totales del día y tabla con estados" loading="lazy"></figure>
+        <div class="body">
+          <div>
+            <h3><span class="code">P6</span>Consultar turnos</h3>
+            <p>Historial filtrable con los totales del día.</p>
+            <ul>
+              <li>Filtros por fecha, servicio y estado.</li>
+              <li>Cinco totales: turnos del día, atendidos, no presentados, en espera y espera promedio.</li>
+              <li>Tabla con llegada, llamado, espera, ventanilla, quién atendió y estado.</li>
+            </ul>
+          </div>
+          <div class="facts">
+            <div><span>Usuario</span>Administrador, Recepcionista</div>
+            <div><span>Trazabilidad</span><div class="tags"><i class="tag cu">CU-07</i><i class="tag">RF-07</i></div></div>
+            <div><span>Vista Vue</span><code>/turnos</code></div>
+            <div><span>API</span><code>GET /api/turnos?fecha=&amp;servicio=&amp;estado=</code></div>
+          </div>
+        </div>
+      </article>
+    </section>
+  </main>
+</div>
+
+<footer>TurnoFácil · Grupo 2 · Ingeniería de Software II · UNICARIBE · 2026</footer>
+
+<div class="lightbox" id="lightbox" role="dialog" aria-label="Imagen ampliada"><img alt=""></div>
+
+<script>
+const lb = document.getElementById('lightbox'), lbImg = lb.querySelector('img');
+document.querySelectorAll('.screen figure img').forEach(img => {
+  img.parentElement.addEventListener('click', () => {
+    lbImg.src = img.src; lbImg.alt = img.alt; lb.classList.add('open');
+  });
+});
+lb.addEventListener('click', () => lb.classList.remove('open'));
+document.addEventListener('keydown', e => { if (e.key === 'Escape') lb.classList.remove('open'); });
+</script>
+</body>
+</html>
