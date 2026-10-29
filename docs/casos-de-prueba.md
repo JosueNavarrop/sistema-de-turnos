@@ -37,6 +37,15 @@ Complementan las automáticas y se ejecutaron en Chrome contra el sistema levant
 | PM-01 | Kiosco | Tocar «Caja» | Ticket con código, personas delante y espera; vuelve a la lista a los 5 s | ✅ |
 | PM-02 | Login | Contraseña incorrecta | Mensaje rojo «Usuario o contraseña inválidos» | ✅ |
 | PM-03 | Recepción | Llamar siguiente con un turno abierto | El botón está desactivado y explica por qué | ✅ |
-| PM-04 | Pantalla pública | Llamar un turno desde recepción | Aparece en 3 s o menos y parpadea; suena si se pulsó «Activar sonido» | ✅ Aparición · sonido: verificar en la TV |
+| PM-04 | Pantalla pública | Llamar un turno y «Volver a llamar» desde recepción, con la pantalla abierta | Aparece en 3 s o menos y parpadea; suena si se pulsó «Activar sonido» | ✅ Aparición y parpadeo · sonido: verificar en la TV |
 | PM-05 | Administración | Nuevo servicio con prefijo «C» | Error «El prefijo «C» ya lo usa «Caja»» dentro del formulario | ✅ |
 | PM-06 | Rutas | Entrar a `/admin` como recepcionista | Redirige a `/recepcion` | ✅ |
+| PM-07 | Kiosco | Sacar un turno y esperar 7 s | El ticket desaparece y vuelve la lista de servicios | ✅ |
+| PM-08 | Administración | Activar «Reclamos» con ⏻ y abrir el kiosco; luego desactivarlo | Aparece en el kiosco y desaparece al desactivarlo | ✅ |
+| PM-09 | Administración | Editar la Ventanilla 3 y marcarla activa | Queda «Activo» en la tabla | ✅ |
+| PM-10 | Administración | Nuevo usuario con usuario repetido «aperez»; luego con uno nuevo | Error «El usuario «aperez» ya existe»; después se crea y aparece en la tabla | ✅ |
+| PM-11 | Recepción | Entrar con el usuario recién creado y llamar siguiente | Llama un turno de los servicios de su ventanilla | ✅ |
+| PM-12 | Recepción | «No se presentó» | El turno se cierra y suma a «No presentados» | ✅ |
+| PM-13 | Sesión | Cerrar sesión y abrir `/admin` | Lleva a `/login?volver=/admin`; al entrar como admin vuelve a `/admin` | ✅ |
+| PM-14 | Consultar turnos | Cancelar un turno en espera con ✕; filtrar por estado, servicio y una fecha sin turnos | Pide confirmación y lo marca «Cancelado»; filtros correctos; «Sin turnos para ese filtro» | ✅ |
+| PM-15 | Todas | Ver en tablet (768 px) y celular (375 px) | Sin desbordes horizontales ni textos cortados | ✅ Tras corregir la pantalla pública y los filtros |
