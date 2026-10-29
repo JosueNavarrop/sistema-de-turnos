@@ -112,5 +112,7 @@ onUnmounted(() => clearInterval(intervalo))
 .tenue{opacity:.6;font-size:14px}
 .tv-aviso{background:rgba(0,0,0,.25);padding:12px 36px;font-size:clamp(13px,1.1vw,20px);display:flex;justify-content:space-between;gap:12px;align-items:center}
 .tv-aviso button{background:transparent;border:1px solid rgba(255,255,255,.35);color:#fff;border-radius:999px;padding:5px 14px;font-size:13px;flex:none}
-@media (max-width:860px){.tv-grid{grid-template-columns:1fr}.tv-top,.tv-aviso{padding:14px 18px}}
+.actual .code,.pill{white-space:nowrap}
+.actual,.ultimos{min-width:0}
+@media (max-width:860px){.tv-grid{grid-template-columns:1fr;padding:20px 16px}.tv-top,.tv-aviso{padding:14px 16px}.actual{padding:24px 12px}.actual .code{font-size:19vw}.pill{font-size:5.5vw;padding:8px 22px}}
 </style>

@@ -100,9 +100,12 @@ onMounted(async () => {
 <style scoped>
 .filtros{display:grid;grid-template-columns:repeat(3,1fr) auto;gap:16px;padding:20px;align-items:end;margin-bottom:20px}
 .filtros .btn{height:44px}
+.filtros .campo{min-width:0}
+.filtros select,.filtros input{width:100%}
 .totales{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-bottom:20px}
 .tot{padding:18px 20px}
 .tot b{font-family:var(--f-titulo);font-size:28px;display:block}
 .tot span{font-size:13px;color:var(--gris)}
 @media (max-width:900px){.filtros{grid-template-columns:1fr 1fr}.totales{grid-template-columns:repeat(2,1fr)}}
+@media (max-width:560px){.filtros{grid-template-columns:1fr}}
 </style>

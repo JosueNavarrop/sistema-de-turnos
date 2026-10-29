@@ -1,5 +1,11 @@
 export const hora = t => (t ? new Date(t).toLocaleTimeString('es-DO', { hour: 'numeric', minute: '2-digit' }) : '—')
-export const minutos = m => (m == null ? '—' : m < 1 ? '< 1 min' : `${m} min`)
+export function minutos(m) {
+  if (m == null) return '—'
+  if (m < 1) return '< 1 min'
+  if (m < 60) return `${m} min`
+  const h = Math.floor(m / 60), resto = m % 60
+  return resto ? `${h} h ${resto} min` : `${h} h`
+}
 export const hoyISO = () => new Date().toLocaleDateString('en-CA')
 
 export function fechaLarga(d = new Date()) {

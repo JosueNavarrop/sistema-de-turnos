@@ -85,7 +85,7 @@ a{color:var(--azul)}
 .tabla-wrap{overflow-x:auto}
 table.tabla{width:100%;border-collapse:collapse;font-size:14px}
 .tabla th{text-align:left;font-size:11px;letter-spacing:.05em;text-transform:uppercase;color:var(--gris);font-weight:600;padding:12px 16px;background:var(--bg);border-bottom:1px solid var(--borde);white-space:nowrap}
-.tabla td{padding:12px 16px;border-bottom:1px solid var(--borde);vertical-align:middle}
+.tabla td{padding:12px 16px;border-bottom:1px solid var(--borde);vertical-align:middle;white-space:nowrap}
 .tabla tr:last-child td{border-bottom:0}
 .tabla .cod{font-family:var(--f-titulo);font-weight:600}
 .vacio-tabla{padding:40px;text-align:center;color:var(--gris)}
